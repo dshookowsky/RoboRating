@@ -1,0 +1,36 @@
+<ion-view title="New Round" ng-controller="RoundCtrl">
+    <ion-nav-buttons
+        <ion-nav-buttons side="secondary">
+            <button class="button" on-tap="save()">Save</button>
+        </ion-nav-buttons>
+        <ion-content>
+            <div class="card list">
+                <label class="item item-input">
+                    <span class="input-label">Round Number</span>
+                    <input type="number" ng-model="data.roundNumber" />
+                </label>
+                <label class="item item-divider">
+                    <span class="input-label">Red Alliance</span>
+                </label>
+                <label class="item item-select">
+                    <span class="item-label">Red Team 1</span>
+                    <select placeholder="red1" ng-model="data.red1" ng-options="team as team.id + ' ' + team.name for team in teams"></select>
+                </label>
+                <label class="item item-select">
+                    <span class="item-label">Red Team 2</span>
+                    <select placeholder="red1" ng-model="data.red2" ng-options="team as team.id + ' ' + team.name for team in teams"></select>
+                </label>
+                <div class="item item-divider">                
+                    <label>Blue Alliance</label>
+                </div>        
+                <label class="item item-select">
+                    <span class="item-label">Blue Team 1</span>
+                    <select placeholder="blue1" ng-model="data.blue1" ng-options="team as team.id + ' ' + team.name for team in teams"></select>
+                </label>        
+                <label class="item item-select">
+                    <span class="item-label">Blue Team 2</span>
+                    <select placeholder="blue2" ng-model="data.blue2" ng-options="team as team.id + ' ' + team.name for team in teams"></select>
+                </label>
+            </div>        
+        </ion-content>
+</ion-view>

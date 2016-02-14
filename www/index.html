@@ -3,7 +3,15 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-        <title></title>
+        <!--
+        <meta http-equiv="Content-Security-Policy"
+      content="script-src * 'unsafe-eval';
+                      connect-src * 'unsafe-eval';
+                      object-src 'self';
+                      style-src * 'unsafe-inline';
+                      img-src *">
+        -->
+        <title>Robo Rating</title>
 
         <link href="lib/ionic/css/ionic.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
@@ -16,205 +24,42 @@
         <script src="lib/ionic/js/ionic.bundle.js"></script>
 
         <!-- cordova script (this will be a 404 during development) -->
+        <script src="lib/ngCordova/dist/ng-cordova.js"></script>
         <script src="cordova.js"></script>
-
+        <script src="lib/qrcode.js/qrcode.js"></script>
+        
         <!-- your app's js -->
         <script src="js/app.js"></script>
         <script src="js/controllers.js"></script>
         <script src="js/services.js"></script>
+        <script src="js/directives/directives.js"></script>
+        <script src="js/directives/ratings.js"></script>
+        <script src="js/controllers/ratings.js"></script>
+        <style>
+            input[type="number"] {
+                text-align: right;
+            }
+            
+            .ratingList .item i {
+                margin-right: 2em;
+                font-size: large;
+                font-weight: bold;
+            }
+            
+            qrcode img {
+                margin-left: auto;
+                margin-right: auto;
+            }
+        </style>
     </head>
     <body ng-app="roboRating">
+    <ion-nav-bar class="bar-positive nav-title-slide-ios7">
+        <ion-nav-back-button class="button-clear">
+            <i class="ion-arrow-left-c"></i> Back
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-nav-view>
 
-    <ion-pane>
-        <ion-header-bar class="bar-stable">
-            <h1 class="title">RoboRating</h1>
-        </ion-header-bar>
-        <ion-content ng-controller="MainCtrl">
-            <div class="list card">
-                <div class="item item-divider">General</div>
-                <div class="item item-toggle">
-                    Match
-                    <label class="toggle">
-                        <input ng-model="scoutingType" type="checkbox" checked="checked" placeholder="Scouting Type" />
-                        <div class="track"><div class="handle"></div></div>
-                    </label>
-                </div>
-                <div class="item item-select">
-                    <label>
-                        Team Name
-                        <select ng-model="ratedTeam" ng-options="team as team.id + ' ' + team.name for team in teams"></select>
-                    </label>
-                </div>
-                <div class="item item-input">
-                    <label>Round <input ng-model="roundNumber" type="number" placeholder="Round #"/></label>
-                </div>
-                <div class="item item-select">
-                    <label>
-                        Alliance
-                        <select ng-model="allianceColor">
-                            <option>Red</option>
-                            <option>Blue</option>
-                        </select>
-                    </label>
-                </div>
-
-                <div class="item item-select">
-                    <label>
-                        Alliance Partner
-                        <select ng-model="alliancePartner" ng-options="team as team.id + ' ' + team.name for team in teams"></select>
-                    </label>
-                </div>
-                <div class="item item-select">
-                    <label>
-                        Opponent 1
-                        <select ng-model="opposingTeam1" ng-options="team as team.id + ' ' + team.name for team in teams"></select>
-                    </label>
-                </div>
-                <div class="item item-select">
-                    <label>
-                        Opponent 2
-                        <select ng-model="opposingTeam2" ng-options="team as team.id + ' ' + team.name for team in teams"></select>
-                    </label>
-                </div>
-            </div>
-            <div class="list card">
-                <div class="item item-divider">Autonomous</div>
-                <div class="item item-toggle">
-                    Has Autonomous
-                    <label class="toggle">
-                        <input ng-model="hasAutonomous" type="checkbox" placeholder="Autonomous" />
-                        <div class="track"><div class="handle"></div></div>
-                    </label>                    
-                </div>
-                <div class="item item-toggle">
-                    Rescue Beacon
-                    <label class="toggle">
-                        <input ng-model="rescueBeacon" type="checkbox" placeholder="RescueBeacon" />
-                        <div class="track"><div class="handle"></div></div>
-                    </label>                    
-                </div>
-                <div class="item item-input">
-                    <label>Climbers
-                        <input type="number" ng-model="autonomousClimbers" /></label>
-                </div>
-                <div class="item item-select">
-                    <label>
-                        Parking
-                        <select ng-model="autonomousParking" ng-options="location as location for location in locations"></select>
-                    </label>
-                </div>
-                <div class="item range">
-                    <label class="item range item-stacked-label">
-                        <span class="input-label">Consistency</span>
-                        <span>Weak</span>
-                        <input type="range" min="1" max="5" />
-                        <span>Strong</span>
-                    </label>
-                </div>
-            </div>
-            <div class="list card">
-                <div class="item item-divider">TeleOp</div>
-                <div class="item item-input">
-                    <label>Low Debris
-                        <input type="number" ng-model="lowDebris" /></label>
-                </div>                
-                <div class="item item-input">
-                    <label>Mid Debris
-                        <input type="number" ng-model="midDebris" /></label>
-                </div>                
-                <div class="item item-input">
-                    <label>High Debris
-                        <input type="number" ng-model="highDebris" /></label>
-                </div>                
-                <div class="item item-select">
-                    <label>
-                        Parking
-                        <select ng-model="teleopParking" ng-options="location as location for location in locations"></select>
-                    </label>
-                </div>                
-                <div class="item item-toggle">
-                    Scores Climbers
-                    <label class="toggle">
-                        <input ng-model="scoresClimbers" type="checkbox" placeholder="ScoresClimbers" />
-                        <div class="track"><div class="handle"></div></div>
-                    </label>                    
-                </div>
-                <div class="item item-input">
-                    <label>Zipline Climbers
-                        <input type="number" ng-model="ziplineClimbers" /></label>
-                </div>
-                <div class="item item-toggle">
-                    Scores Debris
-                    <label class="toggle">
-                        <input ng-model="scoresDebris" type="checkbox" placeholder="ScoresDebris" />
-                        <div class="track"><div class="handle"></div></div>
-                    </label>                    
-                </div>
-                <div class="item item-input">
-                    <label>Debris in Floor
-                        <input type="number" ng-model="debrisInFloor" /></label>
-                </div>
-            </div>
-            <div class="list card">
-                <div class="item item-divider">End Game</div>
-                <div class="item item-select">
-                    <label>
-                        Parking
-                        <select ng-model="endgameParking" ng-options="location as location for location in locations"></select>
-                    </label>
-                </div>
-                <div class="item item-toggle">
-                    All Clear
-                    <label class="toggle">
-                        <input ng-model="allClear" type="checkbox" placeholder="All Clear" />
-                        <div class="track"><div class="handle"></div></div>
-                    </label>                    
-                </div>
-            </div>
-            <div class="list card">
-                <div class="item item-divider">Overall</div>
-                <div class="item item-input">
-                    <label>Total Points
-                        <input type="number" ng-model="totalPoints" /></label>
-                </div>                
-                <div class="item range">
-                    <label class="item range item-stacked-label">
-                        <span class="input-label">Consistency</span>
-                        <span>Weak</span>
-                        <input ng-model="overallConsistency" type="range" min="1" max="5" />
-                        <span>Strong</span>
-                    </label>
-                </div>
-                <div class="item range">
-                    <label class="item range item-stacked-label">
-                        <span class="input-label">Driver Control</span>
-                        <span>Weak</span>
-                        <input ng-model="driverControl" type="range" min="1" max="5" />
-                        <span>Strong</span>
-                    </label>
-                </div>
-                <div class="item range">
-                    <label class="item range item-stacked-label">
-                        <span class="input-label">Climb Speed</span>
-                        <span>Weak</span>
-                        <input ng-model="overallConsistency" type="range" min="1" max="5" />
-                        <span>Strong</span>
-                    </label>
-                </div>
-                <div class="item range">
-                    <label class="item range item-stacked-label">
-                        <span class="input-label">Endurance</span>
-                        <span>Weak</span>
-                        <input ng-model="endurance" type="range" min="1" max="5" />
-                        <span>Strong</span>
-                    </label>
-                </div>
-                <div class="item item-input">
-                    <label>Notes
-                        <textarea type="number" ng-model="totalPoints" ></textarea></label>
-                </div>
-            </div>
-        </ion-content>
-    </ion-pane>
+    </ion-nav-view>
 </body>
 </html>

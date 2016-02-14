@@ -1,0 +1,14 @@
+<ion-view title="RoboRating" ng-controller="MainCtrl">
+    <ion-nav-buttons side="secondary">
+        <button class="button icon ion-plus-circled" on-tap="newRating()"></button>
+    </ion-nav-buttons>
+    <ion-content>
+        <div class="list ratingList">
+            <ion-item ng-repeat="rating in ratings" href="#/rating/{{rating.ratingId}}">
+                <i class="icon ion-eye" ng-show="rating.complete"></i>
+                <i class="icon ion-eye-disabled" ng-show="!rating.complete"></i>
+                <span style="color: {{rating.alliance}}">Round: {{ rating.roundNumber }} - {{rating.team.name}}</span>
+            </ion-item>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,4 +1,54 @@
-angular.module('roboRating.services', [])
+angular.module('roboRating.services', [ /*'ngCordova'*/ ])
+        .factory('Ratings', function (/*$cordovaSQLite*/) {
+            var ratings = [];
+
+            return {
+                all: function () {
+                    return ratings;
+                },
+                get: function (ratingId) {
+                    for (var index = 0; index < ratings.length; index++) {
+                        if (ratings[index].ratingId === ratingId) {
+                            return ratings[index];
+                        }
+                    }
+                },
+                insert: function (rating) {
+                    ratingId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                        return v.toString(16);
+                    });
+                    rating.ratingId = ratingId;
+                    /*
+                    var db =  $cordovaSQLite.openDB("roborating.db");
+                    var query = "INSERT INTO ratings (ratingId, roundNumber, teamName, teamNumber, alliance, hasAutonomous, rescueBeacon, autonomousClimbers, autonomousParking, consistency, lowDebris, midDebris, highDebris, teleopParking, scoresClimbers, ziplineClimbers, scoresDebris, debrisInFloor, endgameParking, allClear, totalPoints, overallConsistency, driverControl, climbSpeed, endurance, notes); VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+                    $cordovaSQLite.execute(db, query, [rating.ratingId, rating.team.teamName, rating.team.teamNumber, rating.alliance, rating.hasAutonomous, rating.rescueBeacon, rating.autonomousClimbers, rating.autonomousParking, rating.consistency, rating.lowDebris, rating.midDebris, rating.highDebris, rating.teleopParking, rating.scoresClimbers, rating.ziplineClimbers, rating.scoresDebris, rating.debrisInFloor, rating.endgameParking, rating.allClear, rating.totalPoints, rating.overallConsistency, rating.driverControl, rating.climbSpeed, rating.endurance, rating.notes]).then(function (res) {
+                        console.log("insertId: " + res.insertId);
+                    }, function (err) {
+                        console.error(err);
+                    });
+                    */
+                    ratings.push(rating);
+                },
+                save: function (rating) {
+                    for (var index = 0; index < ratings.length; index++) {
+                        if (ratings[index].ratingId === rating.ratingId) {
+                            ratings[index] = rating;
+                        }
+                    }
+                }
+            };
+            /*
+             
+             var query = "INSERT INTO ratings (isMatch, ratedTeam, roundNumber, allianceColor, alliancePartner, opposition1, opposition2, hasAutonomous, rescueBeacon, autonomousClimbers, autonomousParking, consistency, lowDebris, midDebris, highDebris, teleopParking, scoresClimbers, ziplineClimbers, scoresDebris, debrisInFloor, endgameParking, allClear, totalPoints, overallConsistency, driverControl, climbSpeed, endurance, notes); VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+             $cordovaSQLite.execute(db, query, ["test", 100]).then(function(res) {
+             console.log("insertId: " + res.insertId);
+             }, function (err) {
+             console.error(err);
+             });
+             */
+        })
+
         .factory('Teams', function () {
             var teams = [
                 {"id": 118, "name": "Steel Hornets"},
@@ -43,7 +93,7 @@ angular.module('roboRating.services', [])
                     return teams;
                 },
                 get: function (teamId) {
-                    for (var i = 0; i < chats.length; i++) {
+                    for (var i = 0; i < teams.length; i++) {
                         if (teams[i].id === parseInt(teamId)) {
                             return teams[i];
                         }
@@ -52,7 +102,7 @@ angular.module('roboRating.services', [])
                 }
             };
         })
-        
+
         .factory('Locations', function () {
             var locations = [
                 'None',
@@ -62,7 +112,7 @@ angular.module('roboRating.services', [])
                 'High',
                 'Hang'
             ];
-            
+
             return {
                 all: function () {
                     return locations;

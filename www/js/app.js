@@ -1,11 +1,27 @@
-// Ionic Starter App
+var app = angular.module('roboRating', ['ionic', 'ngCordova', 'roboRating.services', 'roboRating.controllers', 'roboRating.directives']);
 
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-angular.module('roboRating', ['ionic', 'roboRating.services', 'roboRating.controllers'])
+app.config(function($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise('/');
 
-.run(function($ionicPlatform) {
+    $stateProvider.state('home', {
+        url: '/',
+        templateUrl: 'templates/home.html'
+    })
+   
+    .state('newRating', {
+        url: '/newRating',
+        controller: 'NewRatingCtrl',
+        templateUrl: 'templates/newRating.html'
+    })
+    
+    .state('ratingSlider', {
+        url: '/rating/:ratingId',
+        controller: 'RatingCtrl',
+        templateUrl: 'templates/rating.html'
+    });
+});
+
+app.run(function($ionicPlatform, $cordovaSQLite) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -20,5 +36,11 @@ angular.module('roboRating', ['ionic', 'roboRating.services', 'roboRating.contro
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+    
+    /*
+    db = $cordovaSQLite.openDB("roborating.db");
+    $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS ratings (ratingid text primary key, roundNumber int, teamName text, teamNumber text, alliance text, hasAutonomous bit, rescueBeacon bit, autonomousClimbers int, autonomousParking text, consistency int, lowDebris int, midDebris int, highDebris int, teleopParking text, scoresClimbers bit, ziplineClimbers int, scoresDebris bit, debrisInFloor int, endgameParking text, allClear bit, totalPoints int, overallConsistency int, driverControl int, climbSpeed int, endurance int, notes text)");
+    */
   });
-})
+});
+

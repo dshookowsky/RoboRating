@@ -1,0 +1,10 @@
+<ion-view title="Rating">
+    <ion-nav-buttons side="secondary">
+        <button class="button icon ion-android-done" on-tap="edit()"></button>
+        <button class="button icon ion-eye" on-tap="markComplete()" ng-show="!rating.complete"></button>
+        <button class="button icon ion-eye-disabled" on-tap="markIncomplete()" ng-show="rating.complete"></button>
+    </ion-nav-buttons>
+    <ion-content has-header="true">
+        <rating></rating>
+    </ion-content>
+</ion-view>

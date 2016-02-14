@@ -1,0 +1,143 @@
+<div class="list card">
+    <div class="item item-divider">General</div>
+    <label class="item item-select">
+        <span class="item-label">Team</span>
+        <select ng-readonly="rating.ratingId != null" placeholder="red1" ng-model="rating.team" ng-options="team as team.id + ' ' + team.name for team in teams"></select>
+    </label>
+    <label class="item item-input">
+        <span class="input-label">Round</span>
+        <input type="number" ng-model="rating.roundNumber" required />
+    </label>
+    <label class="item item-select">
+        <span class="input-label">Alliance</span>
+
+        <select ng-model="rating.alliance" required>
+            <option>Blue</option>
+            <option>Red</option>
+        </select>
+    </label>
+</div>
+<div class="list card">
+    <div class="item item-divider">Autonomous</div>
+    <label class="item item-toggle">
+        <span class="input-label">Has Autonomous</span>
+        <label class="toggle">
+            <input ng-model="rating.hasAutonomous" type="checkbox" placeholder="Autonomous" />
+            <div class="track"><div class="handle"></div></div>
+        </label>                    
+    </label>
+    <label class="item item-toggle">  
+        <span class="input-label">Rescue Beacon</span>
+        <label class="toggle">
+            <input ng-model="rating.rescueBeacon" type="checkbox" placeholder="RescueBeacon" />
+            <div class="track"><div class="handle"></div></div>
+        </label>                    
+    </label>
+    <label class="item item-input">
+        <span class="input-label">Climbers</span>
+        <input type="number" ng-model="rating.autonomousClimbers" />
+    </label>
+    <label class="item item-select">
+        <span class="input-label">Parking</span>
+        <select ng-model="rating.autonomousParking" ng-options="location as location for location in locations"></select>
+    </label>
+    <label class="item range item-stacked-label">
+        <span class="input-label">Consistency</span>
+        <span>Weak</span>
+        <input type="range" min="1" max="5" ng-model="rating.consistency" />
+        <span>Strong</span>
+    </label>
+</div>
+<div class="list card">
+    <div class="item item-divider">TeleOp</div>
+    <label class="item item-input">
+        <span class="input-label">Low Debris</span>
+        <input type="number" ng-model="rating.lowDebris" />
+    </label>
+    <label class="item item-input">
+        <span class="input-label">Mid Debris</span>
+        <input type="number" ng-model="rating.midDebris" />
+    </label>                
+    <label class="item item-input">
+        <span class="input-label">High Debris</span>
+        <input type="number" ng-model="rating.highDebris" />
+    </label>                
+    <label class="item item-select">
+        Parking
+        <select ng-model="rating.teleopParking" ng-options="location as location for location in locations"></select>
+    </label>
+</div>                
+<div class="item item-toggle">
+    Scores Climbers
+    <label class="toggle">
+        <input ng-model="rating.scoresClimbers" type="checkbox" placeholder="ScoresClimbers" />
+        <div class="track"><div class="handle"></div></div>
+    </label>                    
+</div>
+<label class="item item-input">
+    <span class="input-label">Zipline Climbers</span>
+    <input type="number" ng-model="rating.ziplineClimbers" />
+</label>
+<label class="item item-toggle">
+    <span class="input-label">Scores Debris</span>
+    <label class="toggle">
+        <input ng-model="rating.scoresDebris" type="checkbox" placeholder="ScoresDebris" />
+        <div class="track"><div class="handle"></div></div>
+    </label>                    
+</label>
+<label class="item item-input">
+    <span class="input-label">Debris in Floor</span>
+    <input type="number" ng-model="rating.debrisInFloor" />
+</label>
+
+<div class="list card">
+    <div class="item item-divider">End Game</div>
+    <label class="item item-select">
+        <span class="input-label">Parking</span>
+        <select ng-model="rating.endgameParking" ng-options="location as location for location in locations"></select>        
+    </label>
+    <label class="item item-toggle">
+        <span class="input-label">All Clear</span>
+        <label class="toggle">
+            <input ng-model="rating.allClear" type="checkbox" placeholder="All Clear" />
+            <div class="track"><div class="handle"></div></div>
+        </label>                    
+    </label>
+</div>
+<div class="list card">
+    <div class="item item-divider">Overall</div>
+    <label class="item item-input">
+        <span class="input-label">Total Points</span>
+        <input type="number" ng-model="rating.totalPoints" />
+    </label>                
+    <label class="item range item-stacked-label">
+        <span class="input-label">Consistency</span>
+        <span>Weak</span>
+        <input ng-model="rating.overallConsistency" type="range" min="1" max="5" />
+        <span>Strong</span>
+    </label>
+    <label class="item range item-stacked-label">
+        <span class="input-label">Driver Control</span>
+        <span>Weak</span>
+        <input ng-model="rating.driverControl" type="range" min="1" max="5" />
+        <span>Strong</span>
+    </label>
+    <label class="item range item-stacked-label">
+        <span class="input-label">Climb Speed</span>
+        <span>Weak</span>
+        <input ng-model="rating.climbSpeed" type="range" min="1" max="5" />
+        <span>Strong</span>
+    </label>
+    <label class="item range item-stacked-label">
+        <span class="input-label">Endurance</span>
+        <span>Weak</span>
+        <input ng-model="rating.endurance" type="range" min="1" max="5" />
+        <span>Strong</span>
+    </label>
+    <label class="item item-input">
+        <span class="input-label">Notes</span>
+        <textarea ng-model="rating.notes" ></textarea>
+    </label>
+    <br/>
+    <qrcode text="{{rating}}" color-bright="#ff0000"></qrcode>
+</div>
