@@ -18,8 +18,8 @@ angular.module('roboRating.directives')
 
                     var options = {
                         text: '',
-                        width: 128,
-                        height: 128,
+                        width: 256,
+                        height: 256,
                         colorDark: '#000000',
                         colorLight: '#ffffff',
                         correctLevel: 'H'

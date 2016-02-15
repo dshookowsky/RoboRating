@@ -3,15 +3,15 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-        <!--
+
         <meta http-equiv="Content-Security-Policy"
-      content="script-src * 'unsafe-eval';
-                      connect-src * 'unsafe-eval';
-                      object-src 'self';
-                      style-src * 'unsafe-inline';
-                      img-src *">
-        -->
-        <title>Robo Rating</title>
+              content="script-src * 'unsafe-inline';
+              connect-src * 'unsafe-eval';
+              object-src 'self';
+              style-src * 'unsafe-inline';
+              img-src 'self' data:;">
+
+        <title>RoboRating</title>
 
         <link href="lib/ionic/css/ionic.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
@@ -27,7 +27,7 @@
         <script src="lib/ngCordova/dist/ng-cordova.js"></script>
         <script src="cordova.js"></script>
         <script src="lib/qrcode.js/qrcode.js"></script>
-        
+
         <!-- your app's js -->
         <script src="js/app.js"></script>
         <script src="js/controllers.js"></script>
@@ -39,20 +39,20 @@
             input[type="number"] {
                 text-align: right;
             }
-            
+
             .ratingList .item i {
                 margin-right: 2em;
                 font-size: large;
                 font-weight: bold;
             }
-            
+
             qrcode img {
                 margin-left: auto;
                 margin-right: auto;
             }
         </style>
     </head>
-    <body ng-app="roboRating">
+    <body id="appElement">
     <ion-nav-bar class="bar-positive nav-title-slide-ios7">
         <ion-nav-back-button class="button-clear">
             <i class="ion-arrow-left-c"></i> Back
@@ -61,5 +61,12 @@
     <ion-nav-view>
 
     </ion-nav-view>
+    <script>
+        document.addEventListener("deviceready", function () {
+            // retrieve the DOM element that had the ng-app attribute
+            var domElement = document.getElementById('appElement');
+            angular.bootstrap(domElement, ["roboRating"]);
+        }, false);
+    </script>    
 </body>
 </html>

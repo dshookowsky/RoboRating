@@ -28,7 +28,31 @@ angular.module("roboRating.controllers")
             
             $scope.rating = {
                 ratingId: null,
-                notes: null                
+                roundNumbe: null,
+                team: {},
+                alliance: "Blue",
+                hasAutonomous: false,
+                rescueBeacon: false,
+                autonomousClimbers: null,
+                autonomousParking: null,
+                consistency: null,
+                lowDebris: null,
+                midDebris: null,
+                highDebris: null,
+                teleopParking: null,
+                scoresClimbers: false,
+                ziplineClimbers: null,
+                scoresDebris: false,
+                debrisInFloor: null,
+                endgameParking: null,
+                allClear: false,
+                totalPoints: null,
+                overallConsistency: null,
+                driverControl: null,
+                climbSpeed: null,
+                endurance: null,
+                notes: null,
+                complete: false 
             };
             
             $scope.insert = function () {

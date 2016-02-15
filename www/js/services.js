@@ -1,17 +1,65 @@
-angular.module('roboRating.services', [ /*'ngCordova'*/ ])
-        .factory('Ratings', function (/*$cordovaSQLite*/) {
-            var ratings = [];
-
+angular.module('roboRating.services', ['ngCordova'])
+        .factory('Ratings', function ($q, $cordovaSQLite) {
+            var ratingsHash = {};
             return {
                 all: function () {
-                    return ratings;
+                    var deferred = $q.defer();
+
+                    var array_values = [];
+
+                    if (db) {
+                        var query = "SELECT ratingId, roundNumber, teamName, teamNumber, alliance, hasAutonomous, rescueBeacon, autonomousClimbers, autonomousParking, consistency, lowDebris, midDebris, highDebris, teleopParking, scoresClimbers, ziplineClimbers, scoresDebris, debrisInFloor, endgameParking, allClear, totalPoints, overallConsistency, driverControl, climbSpeed, endurance, notes, complete FROM ratings;";
+                        $cordovaSQLite.execute(db, query, []).then(function (res) {
+                            if (res.rows.length > 0) {
+                                for (var index = 0; index < res.rows.length; index++) {
+                                    var rating = res.rows.item(index);
+
+                                    ratingsHash[rating.ratingid] = {
+                                        ratingId: rating.ratingid,
+                                        roundNumber: rating.roundNumber,
+                                        team: {id: rating.teamNumber, name: rating.teamName},
+                                        alliance: rating.alliance,
+                                        hasAutonomous: rating.hasAutonomous == true,
+                                        rescueBeacon: rating.rescueBeacon == true,
+                                        autonomousClimbers: rating.autonomousClimbers,
+                                        autonomousParking: rating.autonomousParking,
+                                        consistency: rating.consistency,
+                                        lowDebris: rating.lowDebris,
+                                        midDebris: rating.midDebris,
+                                        highDebris: rating.highDebris,
+                                        teleopParking: rating.teleopParking,
+                                        scoresClimbers: rating.scoresClimbers == true,
+                                        ziplineClimbers: rating.ziplineClimbers,
+                                        scoresDebris: rating.scoresDebris == true,
+                                        debrisInFloor: rating.debrisInFloor,
+                                        endgameParking: rating.endgameParking,
+                                        allClear: rating.allClear == true,
+                                        totalPoints: rating.totalPoints,
+                                        overallConsistency: rating.overallConsistency,
+                                        driverControl: rating.driverControl,
+                                        climbSpeed: rating.climbSpeed,
+                                        endurance: rating.endurance,
+                                        notes: rating.notes,
+                                        complete: rating.complete == true
+                                    }
+                                }
+                            }
+                            for (var ratingId in ratingsHash) {
+                                if (ratingsHash.hasOwnProperty(ratingId)) {
+                                    array_values.push(ratingsHash[ratingId]);
+                                }
+                            }
+
+                            deferred.resolve(array_values);
+                        }, function (err) {
+                            console.dir(err);
+                        });
+                    }
+
+                    return deferred.promise;
                 },
                 get: function (ratingId) {
-                    for (var index = 0; index < ratings.length; index++) {
-                        if (ratings[index].ratingId === ratingId) {
-                            return ratings[index];
-                        }
-                    }
+                    return ratingsHash[ratingId] || null;
                 },
                 insert: function (rating) {
                     ratingId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -19,34 +67,26 @@ angular.module('roboRating.services', [ /*'ngCordova'*/ ])
                         return v.toString(16);
                     });
                     rating.ratingId = ratingId;
-                    /*
-                    var db =  $cordovaSQLite.openDB("roborating.db");
-                    var query = "INSERT INTO ratings (ratingId, roundNumber, teamName, teamNumber, alliance, hasAutonomous, rescueBeacon, autonomousClimbers, autonomousParking, consistency, lowDebris, midDebris, highDebris, teleopParking, scoresClimbers, ziplineClimbers, scoresDebris, debrisInFloor, endgameParking, allClear, totalPoints, overallConsistency, driverControl, climbSpeed, endurance, notes); VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-                    $cordovaSQLite.execute(db, query, [rating.ratingId, rating.team.teamName, rating.team.teamNumber, rating.alliance, rating.hasAutonomous, rating.rescueBeacon, rating.autonomousClimbers, rating.autonomousParking, rating.consistency, rating.lowDebris, rating.midDebris, rating.highDebris, rating.teleopParking, rating.scoresClimbers, rating.ziplineClimbers, rating.scoresDebris, rating.debrisInFloor, rating.endgameParking, rating.allClear, rating.totalPoints, rating.overallConsistency, rating.driverControl, rating.climbSpeed, rating.endurance, rating.notes]).then(function (res) {
+
+                    console.log("Inserting new record for " + ratingId);
+                    var query = "INSERT INTO ratings (ratingId, roundNumber, teamName, teamNumber, alliance, hasAutonomous, rescueBeacon, autonomousClimbers, autonomousParking, consistency, lowDebris, midDebris, highDebris, teleopParking, scoresClimbers, ziplineClimbers, scoresDebris, debrisInFloor, endgameParking, allClear, totalPoints, overallConsistency, driverControl, climbSpeed, endurance, notes, complete) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, ?);";
+                    $cordovaSQLite.execute(db, query, [rating.ratingId, rating.roundNumber, rating.team.name, rating.team.id, rating.alliance, rating.hasAutonomous ? 1 : 0, rating.rescueBeacon ? 1 : 0, rating.autonomousClimbers, rating.autonomousParking, rating.consistency, rating.lowDebris, rating.midDebris, rating.highDebris, rating.teleopParking, rating.scoresClimbers ? 1 : 0, rating.ziplineClimbers, rating.scoresDebris ? 1 : 0, rating.debrisInFloor, rating.endgameParking, rating.allClear ? 1 : 0, rating.totalPoints, rating.overallConsistency, rating.driverControl, rating.climbSpeed, rating.endurance, rating.notes, rating.complete ? 1 : 0]).then(function (res) {
                         console.log("insertId: " + res.insertId);
                     }, function (err) {
-                        console.error(err);
+                        console.dir(err);
                     });
-                    */
-                    ratings.push(rating);
+
+                    ratingsHash[ratingId] = rating;
                 },
                 save: function (rating) {
-                    for (var index = 0; index < ratings.length; index++) {
-                        if (ratings[index].ratingId === rating.ratingId) {
-                            ratings[index] = rating;
-                        }
-                    }
+                    ratingsHash[rating.ratingId] = rating;
+                    var query = "UPDATE ratings SET roundNumber = ?, teamName = ?, teamNumber = ?, alliance = ?, hasAutonomous = ?, rescueBeacon = ?, autonomousClimbers = ?, autonomousParking = ?, consistency = ?, lowDebris= ?, midDebris = ?, highDebris = ?, teleopParking = ?, scoresClimbers = ?, ziplineClimbers = ?, scoresDebris = ?, debrisInFloor = ?, endgameParking = ?, allClear = ?, totalPoints = ?, overallConsistency = ?, driverControl = ?, climbSpeed = ?, endurance = ?, notes = ?, complete = ? WHERE ratingId = ?;";
+                    $cordovaSQLite.execute(db, query, [rating.roundNumber, rating.team.name, rating.team.id, rating.alliance, rating.hasAutonomous ? 1 : 0, rating.rescueBeacon ? 1 : 0, rating.autonomousClimbers, rating.autonomousParking, rating.consistency, rating.lowDebris, rating.midDebris, rating.highDebris, rating.teleopParking, rating.scoresClimbers ? 1 : 0, rating.ziplineClimbers, rating.scoresDebris ? 1 : 0, rating.debrisInFloor, rating.endgameParking, rating.allClear ? 1 : 0, rating.totalPoints, rating.overallConsistency, rating.driverControl, rating.climbSpeed, rating.endurance, rating.notes, rating.complete ? 1 : 0, rating.ratingId]).then(function (res) {
+                    }, function (err) {
+                        console.dir(err);
+                    });
                 }
             };
-            /*
-             
-             var query = "INSERT INTO ratings (isMatch, ratedTeam, roundNumber, allianceColor, alliancePartner, opposition1, opposition2, hasAutonomous, rescueBeacon, autonomousClimbers, autonomousParking, consistency, lowDebris, midDebris, highDebris, teleopParking, scoresClimbers, ziplineClimbers, scoresDebris, debrisInFloor, endgameParking, allClear, totalPoints, overallConsistency, driverControl, climbSpeed, endurance, notes); VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-             $cordovaSQLite.execute(db, query, ["test", 100]).then(function(res) {
-             console.log("insertId: " + res.insertId);
-             }, function (err) {
-             console.error(err);
-             });
-             */
         })
 
         .factory('Teams', function () {

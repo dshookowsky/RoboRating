@@ -1,3 +1,4 @@
+var db = null;
 var app = angular.module('roboRating', ['ionic', 'ngCordova', 'roboRating.services', 'roboRating.controllers', 'roboRating.directives']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
@@ -5,7 +6,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
     $stateProvider.state('home', {
         url: '/',
-        templateUrl: 'templates/home.html'
+        templateUrl: 'templates/home.html',
+        resolve: {
+            ratings: function () {}
+        }
     })
    
     .state('newRating', {
@@ -21,7 +25,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
     });
 });
 
-app.run(function($ionicPlatform, $cordovaSQLite) {
+app.run(function($ionicPlatform, $rootScope, $cordovaSQLite) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -37,10 +41,10 @@ app.run(function($ionicPlatform, $cordovaSQLite) {
       StatusBar.styleDefault();
     }
     
-    /*
     db = $cordovaSQLite.openDB("roborating.db");
-    $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS ratings (ratingid text primary key, roundNumber int, teamName text, teamNumber text, alliance text, hasAutonomous bit, rescueBeacon bit, autonomousClimbers int, autonomousParking text, consistency int, lowDebris int, midDebris int, highDebris int, teleopParking text, scoresClimbers bit, ziplineClimbers int, scoresDebris bit, debrisInFloor int, endgameParking text, allClear bit, totalPoints int, overallConsistency int, driverControl int, climbSpeed int, endurance int, notes text)");
-    */
-  });
+    $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS ratings (ratingid text primary key, roundNumber int, teamName text, teamNumber int, alliance text, hasAutonomous int, rescueBeacon int, autonomousClimbers int, autonomousParking text, consistency int, lowDebris int, midDebris int, highDebris int, teleopParking text, scoresClimbers int, ziplineClimbers int, scoresDebris int, debrisInFloor int, endgameParking text, allClear int, totalPoints int, overallConsistency int, driverControl int, climbSpeed int, endurance int, notes text, complete int)").then(function () {
+        $rootScope.$broadcast('database-loaded');        
+    });
+  });  
 });
 
