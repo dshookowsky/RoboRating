@@ -22,7 +22,7 @@ angular.module('roboRating.directives')
                         height: 256,
                         colorDark: '#000000',
                         colorLight: '#ffffff',
-                        correctLevel: 'H'
+                        correctLevel: 'L'
                     };
 
                     Object.keys(options).forEach(function (key) {

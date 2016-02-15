@@ -80,8 +80,8 @@ angular.module('roboRating.services', ['ngCordova'])
                 },
                 save: function (rating) {
                     ratingsHash[rating.ratingId] = rating;
-                    var query = "UPDATE ratings SET roundNumber = ?, teamName = ?, teamNumber = ?, alliance = ?, hasAutonomous = ?, rescueBeacon = ?, autonomousClimbers = ?, autonomousParking = ?, consistency = ?, lowDebris= ?, midDebris = ?, highDebris = ?, teleopParking = ?, scoresClimbers = ?, ziplineClimbers = ?, scoresDebris = ?, debrisInFloor = ?, endgameParking = ?, allClear = ?, totalPoints = ?, overallConsistency = ?, driverControl = ?, climbSpeed = ?, endurance = ?, notes = ?, complete = ? WHERE ratingId = ?;";
-                    $cordovaSQLite.execute(db, query, [rating.roundNumber, rating.team.name, rating.team.id, rating.alliance, rating.hasAutonomous ? 1 : 0, rating.rescueBeacon ? 1 : 0, rating.autonomousClimbers, rating.autonomousParking, rating.consistency, rating.lowDebris, rating.midDebris, rating.highDebris, rating.teleopParking, rating.scoresClimbers ? 1 : 0, rating.ziplineClimbers, rating.scoresDebris ? 1 : 0, rating.debrisInFloor, rating.endgameParking, rating.allClear ? 1 : 0, rating.totalPoints, rating.overallConsistency, rating.driverControl, rating.climbSpeed, rating.endurance, rating.notes, rating.complete ? 1 : 0, rating.ratingId]).then(function (res) {
+                    var query = "INSERT OR REPLACE INTO ratings (ratingId, roundNumber, teamName, teamNumber, alliance, hasAutonomous, rescueBeacon, autonomousClimbers, autonomousParking, consistency, lowDebris, midDebris, highDebris, teleopParking, scoresClimbers, ziplineClimbers, scoresDebris, debrisInFloor, endgameParking, allClear, totalPoints, overallConsistency, driverControl, climbSpeed, endurance, notes, complete) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, ?);";
+                    $cordovaSQLite.execute(db, query, [rating.ratingId, rating.roundNumber, rating.team.name, rating.team.id, rating.alliance, rating.hasAutonomous ? 1 : 0, rating.rescueBeacon ? 1 : 0, rating.autonomousClimbers, rating.autonomousParking, rating.consistency, rating.lowDebris, rating.midDebris, rating.highDebris, rating.teleopParking, rating.scoresClimbers ? 1 : 0, rating.ziplineClimbers, rating.scoresDebris ? 1 : 0, rating.debrisInFloor, rating.endgameParking, rating.allClear ? 1 : 0, rating.totalPoints, rating.overallConsistency, rating.driverControl, rating.climbSpeed, rating.endurance, rating.notes, rating.complete ? 1 : 0]).then(function (res) {
                     }, function (err) {
                         console.dir(err);
                     });
@@ -103,6 +103,7 @@ angular.module('roboRating.services', ['ngCordova'])
                 {"id": 5910, "name": "Sparks"},
                 {"id": 6022, "name": "TBD - To Be Determined"},
                 {"id": 6191, "name": "Short Circuits"},
+                {"id": 6258, "name": "SEM Robotics"},
                 {"id": 6378, "name": "Jaybots"},
                 {"id": 7244, "name": "OUT of the BOX"},
                 {"id": 7314, "name": "Sab-BOT-age"},
@@ -119,13 +120,13 @@ angular.module('roboRating.services', ['ngCordova'])
                 {"id": 9791, "name": "Divide by Zero"},
                 {"id": 9794, "name": "Wizards.exe"},
                 {"id": 9863, "name": "MASHellaneous"},
-                {"id": 9872, "name": "(In)Formal Logic"},
                 {"id": 9979, "name": "Cougars"},
                 {"id": 10098, "name": "2 Eyed Illuminati"},
+                {"id": 10286, "name": "Download Complete"},
                 {"id": 10333, "name": "TechSpark"},
                 {"id": 10375, "name": "Bot Builders"},
-                {"id": 10795, "name": "RAMDROIDS"},
-                {"id": 10842, "name": "Train of Thought"}
+                {"id": 10842, "name": "Train of Thought"},
+                {"id": 10873, "name": "Brainstormers"}
             ];
 
             return {
