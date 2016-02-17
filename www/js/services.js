@@ -7,6 +7,7 @@ angular.module('roboRating.services', ['ngCordova'])
 
                     var array_values = [];
 
+                    /* When the app first starts, db may not be initialized.  Return an empty array */
                     if (db) {
                         var query = "SELECT ratingId, roundNumber, teamName, teamNumber, alliance, hasAutonomous, rescueBeacon, autonomousClimbers, autonomousParking, consistency, lowDebris, midDebris, highDebris, teleopParking, scoresClimbers, ziplineClimbers, scoresDebris, debrisInFloor, endgameParking, allClear, totalPoints, overallConsistency, driverControl, climbSpeed, endurance, notes, complete FROM ratings;";
                         $cordovaSQLite.execute(db, query, []).then(function (res) {
@@ -14,6 +15,7 @@ angular.module('roboRating.services', ['ngCordova'])
                                 for (var index = 0; index < res.rows.length; index++) {
                                     var rating = res.rows.item(index);
 
+                                    /* cast 1 => true / 0 => false */
                                     ratingsHash[rating.ratingid] = {
                                         ratingId: rating.ratingid,
                                         roundNumber: rating.roundNumber,
@@ -41,7 +43,7 @@ angular.module('roboRating.services', ['ngCordova'])
                                         endurance: rating.endurance,
                                         notes: rating.notes,
                                         complete: rating.complete == true
-                                    }
+                                    };
                                 }
                             }
                             for (var ratingId in ratingsHash) {
@@ -58,10 +60,24 @@ angular.module('roboRating.services', ['ngCordova'])
 
                     return deferred.promise;
                 },
+                delete: function (ratingId, callback) {
+                  var query = "DELETE FROM ratings WHERE ratingId = ?;";
+                  delete ratingsHash[ratingId];
+                  $cordovaSQLite.execute(db, query, [ratingId]).then(
+                          function (res) {
+                              console.dir(res);
+                              callback();
+                          },
+                          function (error) {
+                              console.dir(error);
+                          }
+                  );
+                },
                 get: function (ratingId) {
                     return ratingsHash[ratingId] || null;
                 },
                 insert: function (rating) {
+                    /* create a uuid - there's a small non-zero chance of collision */
                     ratingId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
                         var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
                         return v.toString(16);

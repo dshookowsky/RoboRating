@@ -1,9 +1,20 @@
 angular.module("roboRating.controllers")
-        .controller('RatingCtrl', function ($scope, $ionicHistory, $stateParams, Ratings, Teams, Locations) {
+        .controller('RatingCtrl', function ($scope, $rootScope, $ionicHistory, $stateParams, $cordovaDialogs, Ratings, Teams, Locations) {
             $scope.teams = Teams.all();
             $scope.locations = Locations.all();
 
             $scope.rating = Ratings.get($stateParams.ratingId);
+            
+            $scope.deleteRecord = function () {
+                $cordovaDialogs.confirm("Delete this record?", "Delete", ["OK", "Cancel"]).then(
+                        function (buttonIndex) {
+                            if (buttonIndex === 1) {
+                                Ratings.delete($scope.rating.ratingId, function () {                                    
+                                    $ionicHistory.goBack();                                    
+                                });
+                            }
+                        });
+            };
             
             $scope.edit = function () {
                 Ratings.save($scope.rating);

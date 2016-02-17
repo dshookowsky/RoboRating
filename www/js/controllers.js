@@ -18,10 +18,12 @@ angular.module('roboRating.controllers', [])
             };
             loadRatings();
 
+            /*
             $scope.$on('$ionicView.enter', function () {
                 loadRatings();
             });
-
+            */
+            
             $scope.$on('database-loaded', function () {
                 console.log('database-loaded');
                 loadRatings();

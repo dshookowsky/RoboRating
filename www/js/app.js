@@ -7,6 +7,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider.state('home', {
         url: '/',
         templateUrl: 'templates/home.html',
+        cache: false,
         resolve: {
             ratings: function () {}
         }
