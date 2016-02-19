@@ -1,6 +1,6 @@
 angular.module('roboRating.controllers', [])
 
-        .controller('MainCtrl', function ($scope, $ionicLoading, $cordovaBarcodeScanner, Ratings) {
+        .controller('MainCtrl', function ($scope, $ionicLoading, $cordovaBarcodeScanner, $cordovaSQLite, $cordovaFile, $cordovaDialogs, Ratings) {
 
             var loadRatings = function () {
                 $scope.loadingIndicator = $ionicLoading.show({
@@ -18,12 +18,6 @@ angular.module('roboRating.controllers', [])
             };
             loadRatings();
 
-            /*
-            $scope.$on('$ionicView.enter', function () {
-                loadRatings();
-            });
-            */
-            
             $scope.$on('database-loaded', function () {
                 console.log('database-loaded');
                 loadRatings();
@@ -33,6 +27,22 @@ angular.module('roboRating.controllers', [])
                 window.location = '#/newRating';
             };
 
+            $scope.export = function () {
+                if ( db ) {
+                    db.close();
+                    db = null;
+                }
+                                
+                $cordovaFile.copyFile(cordova.file.applicationStorageDirectory, "databases/roborating.db", cordova.file.externalDataDirectory, "roborating.db").then(
+                        function (success) {
+                            $cordovaDialogs.alert("Database exported to " + success.nativeURL, "Success");
+                            db = $cordovaSQLite.openDB("roborating.db");
+                        }, function (error) {
+                            $cordovaDialogs.alert("Export failed", "Error");
+                            console.dir(error);
+                        });
+            };
+            
             $scope.scan = function () {
                 $cordovaBarcodeScanner.scan({"SCAN_MODE": "QR_CODE_MODE"})
                         .then(function (barcode) {
@@ -40,7 +50,7 @@ angular.module('roboRating.controllers', [])
                                 Ratings.save(JSON.parse(barcode.text));
                                 Ratings.all().then(function (ratings){
                                     $scope.ratings = ratings;
-                                })
+                                });
                             }
                         },
                         function (error) {
