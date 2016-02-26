@@ -29,10 +29,9 @@ angular.module("roboRating.controllers")
             $scope.markIncomplete = function () {
                 $scope.rating.complete = false;
                 Ratings.save($scope.rating);
-            };
-            
+            };                       
         })
-        
+                
         .controller('NewRatingCtrl', function($scope, $ionicHistory, Ratings, Teams, Locations) {
             $scope.teams = Teams.all();
             $scope.locations = Locations.all();
@@ -51,7 +50,7 @@ angular.module("roboRating.controllers")
                 midDebris: null,
                 highDebris: null,
                 teleopParking: null,
-                scoresClimbers: false,
+                scoresClimbers: null,
                 ziplineClimbers: null,
                 scoresDebris: false,
                 debrisInFloor: null,
@@ -69,7 +68,7 @@ angular.module("roboRating.controllers")
             $scope.insert = function () {
                 Ratings.insert($scope.rating);
                 $ionicHistory.goBack();
-            };            
+            };             
         })
 
 ;

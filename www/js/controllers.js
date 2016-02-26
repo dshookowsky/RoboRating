@@ -27,6 +27,7 @@ angular.module('roboRating.controllers', [])
                 window.location = '#/newRating';
             };
 
+            /*
             $scope.export = function () {
                 if ( db ) {
                     db.close();
@@ -42,7 +43,11 @@ angular.module('roboRating.controllers', [])
                             console.dir(error);
                         });
             };
-            
+            */
+            $scope.report = function () {
+                window.location = '#/report';
+            },
+           
             $scope.scan = function () {
                 $cordovaBarcodeScanner.scan({"SCAN_MODE": "QR_CODE_MODE"})
                         .then(function (barcode) {
@@ -58,5 +63,9 @@ angular.module('roboRating.controllers', [])
                         });
             };
         })
-
-        ;
+        .controller('ReportCtrl', function ($scope, Ratings, $ionicLoading) {
+            Ratings.sort().then(function (ratings) {
+                    $scope.ratings = ratings;
+                    $ionicLoading.hide();
+            });
+        });

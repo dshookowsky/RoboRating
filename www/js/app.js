@@ -23,7 +23,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
         url: '/rating/:ratingId',
         controller: 'RatingCtrl',
         templateUrl: 'templates/rating.html'
-    });
+    })
+    
+    .state('report', {
+        url: '/report',
+        controller: 'ReportCtrl',
+        templateUrl: 'templates/report.html'
+    })
+    ;
 });
 
 app.run(function($ionicPlatform, $rootScope, $cordovaSQLite) {
