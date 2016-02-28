@@ -111,10 +111,10 @@ angular.module('roboRating.services', ['ngCordova'])
                     total += rating.rescueBeacon ? 20 : 0;
                     total += rating.autonomousClimbers ? rating.autonomousClimbers * 10 : 0;
                     switch (rating.autonomousParking) {
-                        case "Floor" : total += 5;
-                        case "Low" : total += 10;
-                        case "Mid" : total += 20;
-                        case "High" : total += 40;
+                        case "Floor" : total += 5; break;                                                                                                                       
+                        case "Low" : total += 10; break;
+                        case "Mid" : total += 20; break;
+                        case "High" : total += 40; break;
                     }
 
                     /* Teleop */
@@ -128,11 +128,11 @@ angular.module('roboRating.services', ['ngCordova'])
 
                     /* Endgame */
                     switch (rating.endgameParking) {
-                        case "Floor" : total += 5;
-                        case "Low" : total += 10;
-                        case "Mid" : total += 15;
-                        case "High" : total += 40;
-                        case "Hang" : total += 80;
+                        case "Floor" : total += 5; break;
+                        case "Low" : total += 10; break;
+                        case "Mid" : total += 15; break;
+                        case "High" : total += 40; break;
+                        case "Hang" : total += 80; break;
                     }
                     total += rating.allClear ? 20 : 0;
                     

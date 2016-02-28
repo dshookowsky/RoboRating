@@ -3,14 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Projects/RoboRating/www/js/directives/directives.js</file>
-            <file>file:/C:/Projects/RoboRating/www/js/controllers.js</file>
-            <file>file:/C:/Projects/RoboRating/www/index.html</file>
-            <file>file:/C:/Projects/RoboRating/www/js/app.js</file>
-            <file>file:/C:/Projects/RoboRating/www/templates/home.html</file>
-            <file>file:/C:/Projects/RoboRating/www/js/services.js</file>
+            <file>file:/C:/Projects/RoboRating/www/templates/newRating.html</file>
+            <file>file:/C:/Projects/RoboRating/config.xml</file>
+            <file>file:/C:/Projects/RoboRating/www/templates/ratingcard.html</file>
             <file>file:/C:/Projects/RoboRating/www/templates/rating.html</file>
-            <file>file:/C:/Projects/RoboRating/www/js/controllers/ratings.js</file>
+            <file>file:/C:/Projects/RoboRating/www/js/services.js</file>
             <file>file:/C:/Projects/RoboRating/www/js/directives/ratings.js</file>
         </group>
     </open-files>
