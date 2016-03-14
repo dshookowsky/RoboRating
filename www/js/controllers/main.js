@@ -1,8 +1,7 @@
-angular.module('roboRating.controllers', [])
+angular.module('roboRating.controllers')
+        .controller('MainCtrl', function ($scope, $ionicLoading, $cordovaBarcodeScanner, $cordovaSQLite, $cordovaFile, $cordovaDialogs, Rounds) {
 
-        .controller('MainCtrl', function ($scope, $ionicLoading, $cordovaBarcodeScanner, $cordovaSQLite, $cordovaFile, $cordovaDialogs, Ratings) {
-
-            var loadRatings = function () {
+            var loadRounds = function () {
                 $scope.loadingIndicator = $ionicLoading.show({
                     content: 'Loading Data',
                     animation: 'fade-in',
@@ -11,28 +10,28 @@ angular.module('roboRating.controllers', [])
                     showDelay: 500
                 });
 
-                Ratings.all().then(function (ratings) {
-                    $scope.ratings = ratings;
+                Rounds.all().then(function (rounds) {
+                    $scope.rounds = rounds
                     $ionicLoading.hide();
                 });
             };
-            loadRatings();
+            loadRounds();
 
             $scope.$on('database-loaded', function () {
                 console.log('database-loaded');
-                loadRatings();
+                loadRounds();
             });
 
             $scope.newRating = function () {
                 window.location = '#/newRating';
             };
-      
+
             $scope.export = function () {
                 if ( db ) {
                     db.close();
                     db = null;
                 }
-                                
+
                 $cordovaFile.copyFile(cordova.file.applicationStorageDirectory, "databases/roborating.db", cordova.file.externalDataDirectory, "roborating.db").then(
                         function (success) {
                             $cordovaDialogs.alert("Database exported to " + success.nativeURL, "Success");
@@ -46,7 +45,7 @@ angular.module('roboRating.controllers', [])
             $scope.report = function () {
                 window.location = '#/report';
             },
-           
+
             $scope.scan = function () {
                 $cordovaBarcodeScanner.scan({"SCAN_MODE": "QR_CODE_MODE"})
                         .then(function (barcode) {
@@ -61,10 +60,4 @@ angular.module('roboRating.controllers', [])
                             console.dir(error);
                         });
             };
-        })
-        .controller('ReportCtrl', function ($scope, Ratings, $ionicLoading) {
-            Ratings.sort().then(function (ratings) {
-                    $scope.ratings = ratings;
-                    $ionicLoading.hide();
-            });
         });

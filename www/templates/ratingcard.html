@@ -1,16 +1,21 @@
-<div class="list card">
+<ion-header-bar>
+    <button class="button button-clear icon ion-android-done" on-tap="edit()"></button>
+    <button class="button button-clear icon ion-eye" on-tap="markComplete()" ng-show="!rating.complete"></button>
+    <button class="button button-clear icon ion-eye-disabled" on-tap="markIncomplete()" ng-show="rating.complete"></button>
+    <button class="button button-clear icon ion-android-delete" on-tap="deleteRecord()"></button>
+</ion-header-bar>
+<div class="list card" style="margin-top: 4em;">
     <div class="item item-divider">General</div>
-    <label class="item item-select">
+    <label class="item item-input">
         <span class="item-label">Team</span>
-        <select placeholder="red1" ng-model="rating.team" ng-options="team as team.id + ' ' + team.name for team in teams track by team.id"></select>
+        <label class="valueLabel">{{rating.team.name}}</label>
     </label>
     <label class="item item-input">
         <span class="input-label">Round</span>
-        <input type="number" ng-model="rating.roundNumber" required />
+        <label class="valueLabel">{{rating.roundNumber}}</label>
     </label>
     <label class="item item-select">
         <span class="input-label">Alliance</span>
-
         <select ng-model="rating.alliance" required>
             <option>Blue</option>
             <option>Red</option>
@@ -19,16 +24,16 @@
 </div>
 <div class="list card">
     <div class="item item-divider">Autonomous</div>
-    <label class="item item-toggle">  
+    <label class="item item-toggle">
         <span class="input-label">Rescue Beacon</span>
         <label class="toggle">
             <input ng-model="rating.rescueBeacon" type="checkbox" placeholder="RescueBeacon" />
             <div class="track"><div class="handle"></div></div>
-        </label>                    
+        </label>
     </label>
-    <label class="item item-input">
+    <label class="item item-select">
         <span class="input-label">Climbers</span>
-        <input type="number" ng-model="rating.autonomousClimbers" />
+        <select ng-model="rating.autonomousClimbers" ng-options="value for value in shelterClimbers"></select>
     </label>
     <label class="item item-select">
         <span class="input-label">Parking</span>
@@ -44,36 +49,36 @@
     <label class="item item-input">
         <span class="input-label">Mid Debris</span>
         <input type="number" ng-model="rating.midDebris" />
-    </label>                
+    </label>
     <label class="item item-input">
         <span class="input-label">High Debris</span>
         <input type="number" ng-model="rating.highDebris" />
-    </label>                
-    <label class="item item-input">
+    </label>
+    <label class="item item-select">
         <span class="input-label">Shelter Climbers</span>
-        <input type="number" ng-model="rating.scoresClimbers" />
-    </label>                   
-    <label class="item item-input">
+        <select ng-model="rating.scoresClimbers" ng-options="value for value in shelterClimbers"></select>
+    </label>
+    <label class="item item-select">
         <span class="input-label">Zipline Climbers</span>
-        <input type="number" ng-model="rating.ziplineClimbers" />
+        <select ng-model="rating.ziplineClimbers" ng-options="value for value in ziplineClimbers"></select>
     </label>
     <label class="item item-input">
         <span class="input-label">Debris in Floor</span>
         <input type="number" ng-model="rating.debrisInFloor" />
     </label>
-</div>                
+</div>
 <div class="list card">
     <div class="item item-divider">End Game</div>
     <label class="item item-select">
         <span class="input-label">Parking</span>
-        <select ng-model="rating.endgameParking" ng-options="location as location for location in locations"></select>        
+        <select ng-model="rating.endgameParking" ng-options="location as location for location in locations"></select>
     </label>
     <label class="item item-toggle">
         <span class="input-label">All Clear</span>
         <label class="toggle">
             <input ng-model="rating.allClear" type="checkbox" placeholder="All Clear" />
             <div class="track"><div class="handle"></div></div>
-        </label>                    
+        </label>
     </label>
 </div>
 <div class="list card">
@@ -81,7 +86,7 @@
     <label class="item item-input">
         <span class="input-label">Total Points</span>
         <input type="number" ng-model="rating.totalPoints" readonly="readonly"/>
-    </label>                   
+    </label>
     <label class="item item-input">
         <span class="input-label">Notes</span>
         <textarea ng-model="rating.notes" ></textarea>

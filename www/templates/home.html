@@ -5,12 +5,12 @@
         <button class="button icon ion-stats-bars" on-tap="report()"></button>
         <button class="button icon ion-android-share" on-tap="export()"></button>
     </ion-nav-buttons>
-    <ion-content>        
+    <ion-content>
         <div class="list ratingList">
-            <ion-item ng-repeat="rating in ratings" href="#/rating/{{rating.ratingId}}">
-                <i class="icon ion-eye" ng-show="rating.complete"></i>
-                <i class="icon ion-eye-disabled" ng-show="!rating.complete"></i>
-                <span style="color: {{rating.alliance}}">Round: {{ rating.roundNumber }} - ({{rating.team.id }}) {{rating.team.name}}</span>
+            <ion-item ng-repeat="round in rounds" href="#/round/{{round.roundNumber}}">
+                <i class="icon ion-eye" ng-show="round.complete"></i>
+                <i class="icon ion-eye-disabled" ng-show="!round.complete"></i>
+                <span>Round: {{ round.roundNumber }}</span>
             </ion-item>
         </div>
     </ion-content>
