@@ -1,5 +1,5 @@
 angular.module('roboRating.controllers')
-        .controller('MainCtrl', function ($scope, $ionicLoading, $cordovaBarcodeScanner, $cordovaSQLite, $cordovaFile, $cordovaDialogs, Rounds) {
+        .controller('MainCtrl', function ($scope, $ionicLoading, $cordovaBarcodeScanner, $cordovaSQLite, $cordovaFile, $cordovaDialogs, Ratings, Rounds) {
 
             var loadRounds = function () {
                 $scope.loadingIndicator = $ionicLoading.show({
@@ -52,7 +52,7 @@ angular.module('roboRating.controllers')
                             if (barcode && !barcode.cancelled && barcode.format === "QR_CODE" ) {
                                 Ratings.save(JSON.parse(barcode.text));
                                 Ratings.all().then(function (ratings){
-                                    $scope.ratings = ratings;
+                                    loadRounds();
                                 });
                             }
                         },
