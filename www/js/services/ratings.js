@@ -185,7 +185,7 @@ angular.module('roboRating.services')
 
             /* When the app first starts, db may not be initialized.  Return an empty array */
             if (db) {
-                var query = "SELECT teamName, teamNumber, SUM(totalPoints) as totalPoints FROM ratings GROUP BY teamName, teamNumber ORDER BY sum(totalPoints) DESC;";
+                var query = "SELECT teamName, teamNumber, SUM(totalPoints)/count(totalPoints) as averagePoints FROM ratings GROUP BY teamName, teamNumber ORDER BY sum(totalPoints) DESC;";
                 $cordovaSQLite.execute(db, query, []).then(function (res) {
                     if (res.rows.length > 0) {
                         for (var index = 0; index < res.rows.length; index++) {
@@ -194,7 +194,7 @@ angular.module('roboRating.services')
                             array_values.push({
                                 teamName: rating.teamName,
                                 teamNumber: rating.teamNumber,
-                                totalPoints: rating.totalPoints
+                                averagePoints: rating.averagePoints
                             })
                         }
                     }

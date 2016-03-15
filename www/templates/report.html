@@ -1,9 +1,9 @@
 <ion-view title="RoboRating" ng-controller="ReportCtrl">
     <ion-content>
         <div class="list ratingList">
-            <ion-item ng-repeat="rating in ratings">                
-                
-                <span>({{rating.teamNumber }}) {{rating.teamName}} - {{rating.totalPoints }} points</span>
+            <ion-item ng-repeat="rating in ratings">
+
+                <span>({{rating.teamNumber }}) {{rating.teamName}} - {{rating.averagePoints }} points</span>
             </ion-item>
         </div>
     </ion-content>
