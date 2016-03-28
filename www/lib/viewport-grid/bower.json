@@ -1,0 +1,23 @@
+{
+  "name": "viewport-grid",
+  "version": "1.0.2",
+  "main": "dist/viewport-grid.css",
+  "homepage": "http://esripdx.github.io/viewport-grid/",
+  "authors": [
+    "Paul C Pederson <ppederson@esri.com>",
+    "Nikolas Wise <nwise@esri.com>"
+  ],
+  "description": "A modern grid system built on viewport width.",
+  "keywords": [
+    "Viewport",
+    "Grid",
+    "css",
+    "Brockman"
+  ],
+  "license": "ISC",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "site"
+  ]
+}

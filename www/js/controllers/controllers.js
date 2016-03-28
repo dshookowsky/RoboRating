@@ -1,1 +1,1 @@
-angular.module('roboRating.controllers', []);
+angular.module('roboRating.controllers', ['angular-dimple']);
