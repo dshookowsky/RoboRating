@@ -1,6 +1,6 @@
 <ion-view title="RoboRating" ng-controller="ReportCtrl">
     <ion-content>
-        <graph data="graphData" orientation="horizontal" width="100%" height="40em">
+        <graph data="graphData" orientation="horizontal" margin="120" width="100%" height="40em">
           <y field="teamName" order-by="averagePoints" type="Category"></y>
           <x field="averagePoints" type="Measure" title="Average"></x>
           <bar field="teamNumber"></bar>

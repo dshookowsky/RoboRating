@@ -1,4 +1,4 @@
-<ion-header-bar>
+ <ion-header-bar>
     <button class="button button-clear icon ion-android-done" on-tap="edit()"></button>
     <button class="button button-clear icon ion-eye" on-tap="markComplete()" ng-show="!rating.complete"></button>
     <button class="button button-clear icon ion-eye-disabled" on-tap="markIncomplete()" ng-show="rating.complete"></button>
@@ -8,7 +8,7 @@
     <div class="item item-divider">General</div>
     <label class="item item-input">
         <span class="item-label">Team</span>
-        <label class="valueLabel">{{rating.team.name}}</label>
+        <label class="valueLabel">({{rating.team.id}}) {{rating.team.name}}</label>
     </label>
     <label class="item item-input">
         <span class="input-label">Round</span>
