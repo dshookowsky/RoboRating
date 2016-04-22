@@ -11,8 +11,8 @@
         <label class="valueLabel">({{rating.team.id}}) {{rating.team.name}}</label>
     </label>
     <label class="item item-input">
-        <span class="input-label">Round</span>
-        <label class="valueLabel">{{rating.roundNumber}}</label>
+        <span class="input-text">Round</span>
+        <input ng-model="rating.roundNumber" type="number" />
     </label>
     <label class="item item-select">
         <span class="input-label">Alliance</span>
