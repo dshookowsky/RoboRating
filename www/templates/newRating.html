@@ -3,24 +3,73 @@
         <button class="button icon ion-android-done" on-tap="insert()"></button>
     </ion-nav-buttons>
     <ion-content has-header="true">
-      <div class="list card">
-          <div class="item item-divider">General</div>
-          <label class="item item-select">
-              <span class="item-label">Team</span>
-              <select placeholder="red1" ng-model="rating.team" ng-options="team as team.id + ' ' + team.name for team in teams track by team.id"></select>
-          </label>
-          <label class="item item-input">
-              <span class="input-label">Round</span>
-              <input type="number" ng-model="rating.roundNumber" required />
-          </label>
-          <label class="item item-select">
-              <span class="input-label">Alliance</span>
+        <label class="item item-input">
+            <span class="input-label">Round</span>
+            <input type="number" ng-model="round.number" />
+        </label>
 
-              <select ng-model="rating.alliance" required>
-                  <option>Blue</option>
-                  <option>Red</option>
-              </select>
-          </label>
-      </div>
+        <div class="list card">
+            <div class="item item-divider">General</div>
+            <label class="item item-select">
+                <span class="item-label">Team</span>
+                <select placeholder="red1" ng-model="round.ratings[0].team" ng-options="team as team.id + ' ' + team.name for team in teams track by team.id"></select>
+            </label>
+            <label class="item item-select">
+                <span class="input-label">Alliance</span>
+
+                <select ng-model="round.ratings[0].alliance" required>
+                    <option>Blue</option>
+                    <option>Red</option>
+                </select>
+            </label>
+        </div>
+
+        <div class="list card">
+            <div class="item item-divider">General</div>
+            <label class="item item-select">
+                <span class="item-label">Team</span>
+                <select placeholder="red1" ng-model="round.ratings[1].team" ng-options="team as team.id + ' ' + team.name for team in teams track by team.id"></select>
+            </label>
+            <label class="item item-select">
+                <span class="input-label">Alliance</span>
+
+                <select ng-model="round.ratings[1].alliance" required>
+                    <option>Blue</option>
+                    <option>Red</option>
+                </select>
+            </label>
+        </div>
+
+        <div class="list card">
+            <div class="item item-divider">General</div>
+            <label class="item item-select">
+                <span class="item-label">Team</span>
+                <select placeholder="red1" ng-model="round.ratings[2].team" ng-options="team as team.id + ' ' + team.name for team in teams track by team.id"></select>
+            </label>
+            <label class="item item-select">
+                <span class="input-label">Alliance</span>
+
+                <select ng-model="round.ratings[2].alliance" required>
+                    <option>Blue</option>
+                    <option>Red</option>
+                </select>
+            </label>
+        </div>
+
+        <div class="list card">
+            <div class="item item-divider">General</div>
+            <label class="item item-select">
+                <span class="item-label">Team</span>
+                <select placeholder="red1" ng-model="round.ratings[3].team" ng-options="team as team.id + ' ' + team.name for team in teams track by team.id"></select>
+            </label>
+            <label class="item item-select">
+                <span class="input-label">Alliance</span>
+
+                <select ng-model="round.ratings[3].alliance" required>
+                    <option>Blue</option>
+                    <option>Red</option>
+                </select>
+            </label>
+        </div>
     </ion-content>
 </ion-view>
