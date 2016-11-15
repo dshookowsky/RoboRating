@@ -53,6 +53,7 @@ angular.module('roboRating.services')
         {"id":9662,"name":"Misgav"},
         {"id":9794,"name":"Wizards.exe"},
         {"id":9804,"name":"Bomb Squad"},
+        {"id":9829,"name":"Makbots"},
         {"id":9915,"name":"RoboThunder"},
         {"id":10030,"name":"7 Sigma"},
         {"id":10479,"name":"Talon Industries"},

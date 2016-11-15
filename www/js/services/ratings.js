@@ -170,7 +170,7 @@ angular.module('roboRating.services')
             switch (rating.endgameParking) {
                 case "Floor" : total += 5; break;
                 case "Low" : total += 10; break;
-                case "Mid" : total += 15; break;
+                case "Mid" : total += 20; break;
                 case "High" : total += 40; break;
                 case "Hang" : total += 80; break;
             }
