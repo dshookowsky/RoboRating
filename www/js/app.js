@@ -46,7 +46,7 @@ app.run(function($ionicPlatform, $rootScope, $cordovaSQLite) {
       StatusBar.styleDefault();
     }
 
-    db = $cordovaSQLite.openDB("roborating.db");
+    db = $cordovaSQLite.openDB({name: 'roborating.db', location: 'default'});
     $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS ratings (ratingid text primary key, roundNumber int, teamName text, teamNumber int, alliance text, hasAutonomous int, rescueBeacon int, autonomousClimbers int, autonomousParking text, consistency int, lowDebris int, midDebris int, highDebris int, teleopParking text, scoresClimbers int, ziplineClimbers int, scoresDebris int, debrisInFloor int, endgameParking text, allClear int, totalPoints int, overallConsistency int, driverControl int, climbSpeed int, endurance int, notes text, complete int)").then(function () {
         $rootScope.$broadcast('database-loaded');
     });
