@@ -5,10 +5,12 @@
  */
 angular.module('roboRating.directives')
         .directive('rating', function () {
-            var controller = function ($scope, $rootScope, $ionicHistory, $stateParams, $cordovaDialogs, $cordovaToast, Ratings, Locations) {
+            var controller = function ($scope, $rootScope, $ionicHistory, $stateParams, $cordovaDialogs, $cordovaToast, Ratings, Locations, ShotLocations, CapBallLocations) {
                 $scope.locations = Locations.all();
-                $scope.shelterClimbers = [0, 1, 2];
-                $scope.ziplineClimbers = [0, 1, 2, 3];
+                $scope.capBallLocations = CapBallLocations.all();
+                $scope.beacons = [0, 1, 2, 3, 4];
+                $scope.shotLocations = ShotLocations.all();
+                $scope.totalBeacons = [0, 1, 2, 3, 4];
                 
                 $scope.deleteRecord = function () {
                     $cordovaDialogs.confirm("Delete this record?", "Delete", ["OK", "Cancel"]).then(

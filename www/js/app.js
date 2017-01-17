@@ -30,7 +30,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
     ;
 });
 
-app.run(function($ionicPlatform, $rootScope, $cordovaSQLite) {
+app.run(function($ionicPlatform, $rootScope, $cordovaSQLite, Ratings) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -46,8 +46,17 @@ app.run(function($ionicPlatform, $rootScope, $cordovaSQLite) {
       StatusBar.styleDefault();
     }
 
+    /*
+    var query = "CREATE TABLE IF NOT EXISTS ratings (ratingid text primary key,roundNumber int,teamName text,teamNumber int,alliance text,hasAutonomous int,autonBeacons int,autonParticlesShot int,autonParticlesScored int,autonomousParking text,autonCapBall int,teleopCornerShots int,teleopCornerScores int,teleopVortexShots int,teleopVortexScores int,teleopBeacons int,shotLocation text,capBallLocation text,finalBeacons int,totalPoints int, notes text,complete int);";
+    */
+    
+    var query = "CREATE TABLE IF NOT EXISTS ratings (" + Ratings.fields.map(function (a) { return a.name + ' ' + (a.type == "bool" ? "int" : a.type) + ' ' + a.sqlExtra }).join(",") + ");";
+
+    console.log(query);
+
     db = $cordovaSQLite.openDB({name: 'roborating.db', location: 'default'});
-    $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS ratings (ratingid text primary key, roundNumber int, teamName text, teamNumber int, alliance text, hasAutonomous int, rescueBeacon int, autonomousClimbers int, autonomousParking text, consistency int, lowDebris int, midDebris int, highDebris int, teleopParking text, scoresClimbers int, ziplineClimbers int, scoresDebris int, debrisInFloor int, endgameParking text, allClear int, totalPoints int, overallConsistency int, driverControl int, climbSpeed int, endurance int, notes text, complete int)").then(function () {
+    $cordovaSQLite.execute(db, query).then(function () {
+        console.log('query executed')
         $rootScope.$broadcast('database-loaded');
     });
   });

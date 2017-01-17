@@ -25,7 +25,7 @@ angular.module('roboRating.controllers')
             $scope.newRating = function () {
                 window.location = '#/newRating';
             };
-
+            /*
             $scope.export = function () {
                 if ( db ) {
                     db.close();
@@ -41,7 +41,7 @@ angular.module('roboRating.controllers')
                             console.dir(error);
                         });
             };
-
+            */
             $scope.report = function () {
                 window.location = '#/report';
             },

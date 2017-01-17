@@ -2,6 +2,119 @@ angular.module('roboRating.services')
 .factory('Ratings', function ($q, $cordovaSQLite) {
 
     return {
+        fields: [
+            {
+                name: "ratingId",
+                type: "text",
+                sqlExtra: "primary key" 
+            },
+            {
+                name: "roundNumber",
+                type: "int",
+                sqlExtra: "" 
+            },
+            {
+                name: "teamName",
+                type: "text",
+                sqlExtra: "" 
+            },
+            {
+                name: "teamNumber",
+                type: "int",
+                sqlExtra: "" 
+            },
+            {
+                name: "alliance",
+                type: "text",
+                sqlExtra: "" 
+            },
+            {
+                name: "hasAutonomous",
+                type: "bool",
+                sqlExtra: "" 
+            },
+            {
+                name: "autonBeacons",
+                type: "int",
+                sqlExtra: "" 
+            },
+            {
+                name: "autonParticlesShot",
+                type: "int",
+                sqlExtra: "" 
+            },
+            {
+                name: "autonParticlesScored",
+                type: "int",
+                sqlExtra: "" 
+            },
+            {
+                name: "autonomousParking",
+                type: "text",
+                sqlExtra: "" 
+            },                                                
+            {
+                name: "autonCapBall",
+                type: "bool",
+                sqlExtra: "" 
+            },
+            {
+                name: "teleopCornerShots",
+                type: "int",
+                sqlExtra: "" 
+            },
+            {
+                name: "teleopCornerScores ",
+                type: "int",
+                sqlExtra: "" 
+            },
+            {
+                name: "teleopVortexShots",
+                type: "int",
+                sqlExtra: "" 
+            },                                                
+            {
+                name: "teleopVortexScores",
+                type: "int",
+                sqlExtra: "" 
+            },
+            {
+                name: "teleopBeacons",
+                type: "int",
+                sqlExtra: "" 
+            },
+            {
+                name: "shotLocation",
+                type: "text",
+                sqlExtra: "" 
+            },
+            {
+                name: "capBallLocation",
+                type: "text",
+                sqlExtra: "" 
+            },                                                            
+            {
+                name: "finalBeacons",
+                type: "int",
+                sqlExtra: "" 
+            },
+            {
+                name: "totalPoints",
+                type: "int",
+                sqlExtra: "" 
+            },
+            {
+                name: "notes",
+                type: "text",
+                sqlExtra: "" 
+            },
+            {
+                name: "complete",
+                type: "bool",
+                sqlExtra: "" 
+            }
+        ],
+
         all: function () {
             var deferred = $q.defer();
 
@@ -9,7 +122,8 @@ angular.module('roboRating.services')
 
             /* When the app first starts, db may not be initialized.  Return an empty array */
             if (db) {
-                var query = "SELECT ratingId, roundNumber, teamName, teamNumber, alliance, hasAutonomous, rescueBeacon, autonomousClimbers, autonomousParking, consistency, lowDebris, midDebris, highDebris, teleopParking, scoresClimbers, ziplineClimbers, scoresDebris, debrisInFloor, endgameParking, allClear, totalPoints, overallConsistency, driverControl, climbSpeed, endurance, notes, complete FROM ratings;";
+                var query = "SELECT " + this.fields.map(function(a) { return a.name }).join(",") + " FROM ratings;";
+
                 $cordovaSQLite.execute(db, query, []).then(function (res) {
                     if (res.rows.length > 0) {
                         for (var index = 0; index < res.rows.length; index++) {
@@ -22,25 +136,20 @@ angular.module('roboRating.services')
                                 team: {id: rating.teamNumber, name: rating.teamName},
                                 alliance: rating.alliance,
                                 hasAutonomous: rating.hasAutonomous == true,
-                                rescueBeacon: rating.rescueBeacon == true,
-                                autonomousClimbers: rating.autonomousClimbers,
-                                autonomousParking: rating.autonomousParking,
-                                consistency: rating.consistency,
-                                lowDebris: rating.lowDebris,
-                                midDebris: rating.midDebris,
-                                highDebris: rating.highDebris,
-                                teleopParking: rating.teleopParking,
-                                scoresClimbers: rating.scoresClimbers,
-                                ziplineClimbers: rating.ziplineClimbers,
-                                scoresDebris: rating.scoresDebris == true,
-                                debrisInFloor: rating.debrisInFloor,
-                                endgameParking: rating.endgameParking,
-                                allClear: rating.allClear == true,
+                                autonBeacons: rating.autonBeacons,
+                                autonParticlesShot: rating.autonParticlesShot,
+                                autonParticlesScored: rating.autonParticlesScored,
+                                autonomousParkingLocation: rating.autonomousParkingLocation,
+                                autonCapBall: rating.autonCapBall == true,
+                                teleopCornerShots: rating.teleopCornerShots,
+                                teleopCornerScores: rating.teleopCornerScores,
+                                teleopVortexShots: rating.teleopVortexShots,
+                                teleopVortexScores: rating.teleopVortexScores,
+                                teleopBeacons: rating.teleopBeacons,
+                                shotLocation: rating.shotLocation,
+                                capBallLocation: rating.capBallLocation,
+                                finalBeacons: rating.finalBeacons,
                                 totalPoints: rating.totalPoints,
-                                overallConsistency: rating.overallConsistency,
-                                driverControl: rating.driverControl,
-                                climbSpeed: rating.climbSpeed,
-                                endurance: rating.endurance,
                                 notes: rating.notes,
                                 complete: rating.complete == true
                             });
@@ -71,7 +180,7 @@ angular.module('roboRating.services')
         get: function (ratingId) {
           var deferred = $q.defer();
 
-          var query = "SELECT ratingId, roundNumber, teamName, teamNumber, alliance, hasAutonomous, rescueBeacon, autonomousClimbers, autonomousParking, consistency, lowDebris, midDebris, highDebris, teleopParking, scoresClimbers, ziplineClimbers, scoresDebris, debrisInFloor, endgameParking, allClear, totalPoints, overallConsistency, driverControl, climbSpeed, endurance, notes, complete FROM ratings where ratingId = ?;";
+          var query = "SELECT " + this.fields.map(function(a) { return a.name }).join(",") + " FROM ratings WHERE ratingId = ?;";
 
           var rating = null;
 
@@ -81,32 +190,27 @@ angular.module('roboRating.services')
 
                       /* cast 1 => true / 0 => false */
                       rating = {
-                          ratingId: rating.ratingid,
-                          roundNumber: rating.roundNumber,
-                          team: {id: rating.teamNumber, name: rating.teamName},
-                          alliance: rating.alliance,
-                          hasAutonomous: rating.hasAutonomous == true,
-                          rescueBeacon: rating.rescueBeacon == true,
-                          autonomousClimbers: rating.autonomousClimbers,
-                          autonomousParking: rating.autonomousParking,
-                          consistency: rating.consistency,
-                          lowDebris: rating.lowDebris,
-                          midDebris: rating.midDebris,
-                          highDebris: rating.highDebris,
-                          teleopParking: rating.teleopParking,
-                          scoresClimbers: rating.scoresClimbers,
-                          ziplineClimbers: rating.ziplineClimbers,
-                          scoresDebris: rating.scoresDebris == true,
-                          debrisInFloor: rating.debrisInFloor,
-                          endgameParking: rating.endgameParking,
-                          allClear: rating.allClear == true,
-                          totalPoints: rating.totalPoints,
-                          overallConsistency: rating.overallConsistency,
-                          driverControl: rating.driverControl,
-                          climbSpeed: rating.climbSpeed,
-                          endurance: rating.endurance,
-                          notes: rating.notes,
-                          complete: rating.complete == true
+                                ratingId: rating.ratingid,
+                                roundNumber: rating.roundNumber,
+                                team: {id: rating.teamNumber, name: rating.teamName},
+                                alliance: rating.alliance,
+                                hasAutonomous: rating.hasAutonomous == true,
+                                autonBeacons: rating.autonBeacons,
+                                autonParticlesShot: rating.autonParticlesShot,
+                                autonParticlesScored: rating.autonParticlesScored,
+                                autonomousParkingLocation: rating.autonomousParkingLocation,
+                                autonCapBall: rating.autonCapBall == true,
+                                teleopCornerShots: rating.teleopCornerShots,
+                                teleopCornerScores: rating.teleopCornerScores,
+                                teleopVortexShots: rating.teleopVortexShots,
+                                teleopVortexScores: rating.teleopVortexScores,
+                                teleopBeacons: rating.teleopBeacons,
+                                shotLocation: rating.shotLocation,
+                                capBallLocation: rating.capBallLocation,
+                                finalBeacons: rating.finalBeacons,
+                                totalPoints: rating.totalPoints,
+                                notes: rating.notes,
+                                complete: rating.complete == true
                       };
                   }
                   deferred.resolve(rating);
@@ -123,61 +227,137 @@ angular.module('roboRating.services')
                 return v.toString(16);
             });
             rating.ratingId = ratingId;
+            
+            rating.teamName = rating.team.name;
+            rating.teamNumber = rating.team.id;
             rating.totalPoints = this.score(rating);
 
             console.log("Inserting new record for " + ratingId);
-            var query = "INSERT INTO ratings (ratingId, roundNumber, teamName, teamNumber, alliance, hasAutonomous, rescueBeacon, autonomousClimbers, autonomousParking, consistency, lowDebris, midDebris, highDebris, teleopParking, scoresClimbers, ziplineClimbers, scoresDebris, debrisInFloor, endgameParking, allClear, totalPoints, overallConsistency, driverControl, climbSpeed, endurance, notes, complete) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, ?);";
-            $cordovaSQLite.execute(db, query, [rating.ratingId, rating.roundNumber, rating.team.name, rating.team.id, rating.alliance, rating.hasAutonomous ? 1 : 0, rating.rescueBeacon ? 1 : 0, rating.autonomousClimbers, rating.autonomousParking, rating.consistency, rating.lowDebris, rating.midDebris, rating.highDebris, rating.teleopParking, rating.scoresClimbers, rating.ziplineClimbers, rating.scoresDebris ? 1 : 0, rating.debrisInFloor, rating.endgameParking, rating.allClear ? 1 : 0, rating.totalPoints, rating.overallConsistency, rating.driverControl, rating.climbSpeed, rating.endurance, rating.notes, rating.complete ? 1 : 0]).then(function (res) {
+            var query = "INSERT INTO ratings (" + this.fields.map(function(f) { return f.name }).join(",") + ") VALUES (" + this.fields.map(function () { return '?'}).join(",")  + ")";
+
+            console.log(query);
+            var values = [
+                rating.ratingId,
+                rating.roundNumber,
+                rating.teamName,
+                rating.teamNumber,
+                rating.alliance,
+                rating.hasAutonomous ? 1 : 0,
+                rating.autonBeacons,
+                rating.autonParticlesShot,
+                rating.autonParticlesScored,
+                rating.autonomousParking,
+                rating.autonCapBall ? 1 : 0,
+                rating.teleopCornerShots,
+                rating.teleopCornerScores,
+                rating.teleopVortexShots,
+                rating.teleopVortexScores,
+                rating.teleopBeacons,
+                rating.shotLocation,
+                rating.capBallLocation,
+                rating.finalBeacons,
+                rating.totalPoints,
+                rating.notes,
+                rating.complete ? 1 : 0
+            ];
+
+            try {
+            $cordovaSQLite.execute(db, query, values).then(function (res) {
                 console.log("insertId: " + res.insertId);
             }, function (err) {
                 console.dir(err);
             });
+            } catch (ex) { 
+                console.log(ex);
+            }
         },
         save: function (rating) {
             rating.totalPoints = this.score(rating);
+
+            /*
             var query = "INSERT OR REPLACE INTO ratings (ratingId, roundNumber, teamName, teamNumber, alliance, hasAutonomous, rescueBeacon, autonomousClimbers, autonomousParking, consistency, lowDebris, midDebris, highDebris, teleopParking, scoresClimbers, ziplineClimbers, scoresDebris, debrisInFloor, endgameParking, allClear, totalPoints, overallConsistency, driverControl, climbSpeed, endurance, notes, complete) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, ?);";
-            $cordovaSQLite.execute(db, query, [rating.ratingId, rating.roundNumber, rating.team.name, rating.team.id, rating.alliance, rating.hasAutonomous ? 1 : 0, rating.rescueBeacon ? 1 : 0, rating.autonomousClimbers, rating.autonomousParking, rating.consistency, rating.lowDebris, rating.midDebris, rating.highDebris, rating.teleopParking, rating.scoresClimbers, rating.ziplineClimbers, rating.scoresDebris ? 1 : 0, rating.debrisInFloor, rating.endgameParking, rating.allClear ? 1 : 0, rating.totalPoints, rating.overallConsistency, rating.driverControl, rating.climbSpeed, rating.endurance, rating.notes, rating.complete ? 1 : 0]).then(function (res) {
+            */
+            var query = "INSERT OR REPLACE INTO ratings (" + this.fields.map(function(f) { return f.name }).join(",") + ") VALUES (" + this.fields.map(function () { return "?"}).join(",") + ");";
+
+
+            var values = [
+                rating.ratingId,
+                rating.roundNumber,
+                rating.team.name,
+                rating.team.id,
+                rating.alliance,
+                rating.hasAutonomous ? 1 : 0,
+                rating.autonBeacons,
+                rating.autonParticlesShot,
+                rating.autonParticlesScored,
+                rating.autonomousParking,
+                rating.autonCapBall ? 1 : 0,
+                rating.teleopCornerShots,
+                rating.teleopCornerScores,
+                rating.teleopVortexShots,
+                rating.teleopVortexScores,
+                rating.teleopBeacons,
+                rating.shotLocation,
+                rating.capBallLocation,
+                rating.finalBeacons,
+                rating.totalPoints,
+                rating.notes,
+                rating.complete ? 1 : 0
+            ];
+            /*
+            this.fields.map(function(f) { 
+                if (rating.hasOwnProperty(f.name)) {
+                    if (f.type === "bool") {
+                         return rating[f.name] ? 1 : 0;
+                    }
+                    else {
+                        return rating[f.name];
+                    }
+                }
+            })
+            */
+
+            $cordovaSQLite.execute(db, query, values).then(function (res) {
+                console.log("insertId: " + res.insertId);
             }, function (err) {
                 console.dir(err);
-            });
+            });            
         },
+
+        /* Calculate the total score */
         score: function (rating) {
             var total = 0;
 
             /* Autonomous */
-            total += rating.rescueBeacon ? 20 : 0;
-
-            //* count each climber 2x in Autonomous
-            total += rating.autonomousClimbers ? rating.autonomousClimbers * 20 : 0;
+            total += rating.autonBeacons ? rating.autonBeacons * 30 : 0;
+            total += rating.autonCapBall ? 5 : 0;
+            total += rating.autonParticlesScored ? rating.autonParticlesScored * 15 : 0;
 
             switch (rating.autonomousParking) {
-                case "Floor" : total += 5; break;
-                case "Low" : total += 10; break;
-                case "Mid" : total += 20; break;
-                case "High" : total += 40; break;
+                case "Corner (Partial)" : total += 5; break;
+                case "Corner (Full)" : total += 10; break;
+                case "Vortex (Partial)" : total += 5; break;
+                case "Vortex (Full)" : total += 10; break;
             }
 
             /* Teleop */
-            total += rating.debrisInFloor ? rating.debrisInFloor * 1 : 0;
-            total += rating.lowDebris ? rating.lowDebris * 5 : 0;
-            total += rating.midDebris ? rating.midDebris * 10 : 0;
-            total += rating.highDebris ? rating.highDebris * 15 : 0;
-
-            total += rating.scoresClimbers ? rating.scoresClimbers * 10 : 0;
-            total += rating.ziplineClimbers ? rating.ziplineClimbers * 20 : 0;
+            total += rating.teleopCornerScores ? rating.teleopCornerScores * 1 : 0;
+            total += rating.teleopVortexScores ? rating.teleopVortexScores * 5 : 0;
 
             /* Endgame */
-            switch (rating.endgameParking) {
-                case "Floor" : total += 5; break;
-                case "Low" : total += 10; break;
-                case "Mid" : total += 20; break;
-                case "High" : total += 40; break;
-                case "Hang" : total += 80; break;
+            switch (rating.capBallLocation) {
+                case "Floor" : total += 0; break;
+                case "1-29" : total += 10; break;
+                case "30+" : total += 20; break;
+                case "Capped" : total += 40; break
             }
-            total += rating.allClear ? 20 : 0;
+            total += rating.finalBeacons ? rating.finalBeacons *  10 : 0;
 
             return total;
         },
+        /*
+        Return an array of teams ordered by average points scored
+        */
         sort: function () {
             var deferred = $q.defer();
 

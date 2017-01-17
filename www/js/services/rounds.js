@@ -1,5 +1,5 @@
 angular.module('roboRating.services')
-  .factory('Rounds', function ($q, $cordovaSQLite) {
+  .factory('Rounds', function ($q, $cordovaSQLite, Ratings) {
     return {
       /**
       @function all
@@ -32,7 +32,7 @@ angular.module('roboRating.services')
       get: function (roundNumber) {
         var deferred = $q.defer();
 
-        var query = "SELECT ratingId, roundNumber, teamName, teamNumber, alliance, hasAutonomous, rescueBeacon, autonomousClimbers, autonomousParking, consistency, lowDebris, midDebris, highDebris, teleopParking, scoresClimbers, ziplineClimbers, scoresDebris, debrisInFloor, endgameParking, allClear, totalPoints, overallConsistency, driverControl, climbSpeed, endurance, notes, complete FROM ratings where roundNumber = ? ORDER BY teamNumber;";
+        var query = "SELECT " + Ratings.fields.map(function (f) { return f.name}).join(",") + " FROM ratings where roundNumber = ? ORDER BY teamNumber;";
 
         var ratings = [];
         $cordovaSQLite.execute(db, query, [roundNumber]).then(function (res) {
@@ -42,30 +42,25 @@ angular.module('roboRating.services')
 
                     /* cast 1 => true / 0 => false */
                     ratings.push({
-                        ratingId: rating.ratingid,
+                        ratingId: rating.ratingId,
                         roundNumber: rating.roundNumber,
                         team: {id: rating.teamNumber, name: rating.teamName},
                         alliance: rating.alliance,
                         hasAutonomous: rating.hasAutonomous == true,
-                        rescueBeacon: rating.rescueBeacon == true,
-                        autonomousClimbers: rating.autonomousClimbers,
-                        autonomousParking: rating.autonomousParking,
-                        consistency: rating.consistency,
-                        lowDebris: rating.lowDebris,
-                        midDebris: rating.midDebris,
-                        highDebris: rating.highDebris,
-                        teleopParking: rating.teleopParking,
-                        scoresClimbers: rating.scoresClimbers,
-                        ziplineClimbers: rating.ziplineClimbers,
-                        scoresDebris: rating.scoresDebris == true,
-                        debrisInFloor: rating.debrisInFloor,
-                        endgameParking: rating.endgameParking,
-                        allClear: rating.allClear == true,
+                        autonBeacons: rating.autonBeacons,
+                        autonParticlesShot: rating.autonParticlesShot,
+                        autonParticlesScored: rating.autonParticlesScored,
+                        autonomousParkingLocation: rating.autonomousParkingLocation,
+                        autonCapBall: rating.autonCapBall == true,
+                        teleopCornerShots: rating.teleopCornerShots,
+                        teleopCornerScores: rating.teleopCornerScores,
+                        teleopVortexShots: rating.teleopVortexShots,
+                        teleopVortexScores: rating.teleopVortexScores,
+                        teleopBeacons: rating.teleopBeacons,
+                        shotLocation: rating.shotLocation,
+                        capBallLocation: rating.capBallLocation,
+                        finalBeacons: rating.finalBeacons,
                         totalPoints: rating.totalPoints,
-                        overallConsistency: rating.overallConsistency,
-                        driverControl: rating.driverControl,
-                        climbSpeed: rating.climbSpeed,
-                        endurance: rating.endurance,
                         notes: rating.notes,
                         complete: rating.complete == true
                     });

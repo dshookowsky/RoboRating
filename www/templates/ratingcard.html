@@ -24,61 +24,66 @@
 </div>
 <div class="list card">
     <div class="item item-divider">Autonomous</div>
-    <label class="item item-toggle">
-        <span class="input-label">Rescue Beacon</span>
-        <label class="toggle">
-            <input ng-model="rating.rescueBeacon" type="checkbox" placeholder="RescueBeacon" />
-            <div class="track"><div class="handle"></div></div>
-        </label>
-    </label>
     <label class="item item-select">
-        <span class="input-label">Climbers</span>
-        <select ng-model="rating.autonomousClimbers" ng-options="value for value in shelterClimbers"></select>
+        <span class="input-label">Beacons</span>
+        <select ng-model="rating.autonBeacons" ng-options="value for value in beacons"></select>
+    </label>
+    <label class="item item-input">
+        <span class="input-label">Particles Shot</span>
+        <input type="number" ng-model="rating.autonParticlesShot"/>
+    </label>
+    <label class="item item-input">
+        <span class="input-label">Particles Scored</span>
+        <input type="number" ng-model="rating.autonParticlesScored"/>
     </label>
     <label class="item item-select">
         <span class="input-label">Parking</span>
         <select ng-model="rating.autonomousParking" ng-options="location as location for location in locations"></select>
     </label>
+    <label class="item item-toggle">
+        <span class="input-label">Cap Ball touching floor</span>
+        <label class="toggle">
+            <input ng-model="rating.autonCapBall" type="checkbox" placeholder="All Clear" />
+            <div class="track"><div class="handle"></div></div>
+        </label>
+    </label>
 </div>
 <div class="list card">
     <div class="item item-divider">TeleOp</div>
     <label class="item item-input">
-        <span class="input-label">Low Debris</span>
-        <input type="number" ng-model="rating.lowDebris" />
+        <span class="input-label">Corner Shots</span>
+        <input type="number" ng-model="rating.teleopCornerShots" />
     </label>
     <label class="item item-input">
-        <span class="input-label">Mid Debris</span>
-        <input type="number" ng-model="rating.midDebris" />
+        <span class="input-label">Corner Scores</span>
+        <input type="number" ng-model="rating.teleopCornerScores" />
     </label>
     <label class="item item-input">
-        <span class="input-label">High Debris</span>
-        <input type="number" ng-model="rating.highDebris" />
+        <span class="input-label">Vortex Shots</span>
+        <input type="number" ng-model="rating.teleopVortexShots" />
+    </label>
+    <label class="item item-input">
+        <span class="input-label">Vortex Scores</span>
+        <input type="number" ng-model="rating.teleopVortexScores" />
+    </label>
+    <label class="item item-input">
+        <span class="input-label">Beacons</span>
+        <input type="number" ng-model="rating.teleopBeacons" />
     </label>
     <label class="item item-select">
-        <span class="input-label">Shelter Climbers</span>
-        <select ng-model="rating.scoresClimbers" ng-options="value for value in shelterClimbers"></select>
-    </label>
-    <label class="item item-select">
-        <span class="input-label">Zipline Climbers</span>
-        <select ng-model="rating.ziplineClimbers" ng-options="value for value in ziplineClimbers"></select>
-    </label>
-    <label class="item item-input">
-        <span class="input-label">Debris in Floor</span>
-        <input type="number" ng-model="rating.debrisInFloor" />
+        <span class="input-label">Shot Location</span>
+        <select ng-model="rating.shotLocation" ng-options="shotlocation as shotlocation for shotlocation in shotLocations"></select>
     </label>
 </div>
 <div class="list card">
     <div class="item item-divider">End Game</div>
     <label class="item item-select">
-        <span class="input-label">Parking</span>
-        <select ng-model="rating.endgameParking" ng-options="location as location for location in locations"></select>
+        <span class="input-label">Cap Ball Location</span>
+        <select ng-model="rating.capBallLocation" ng-options="capballlocation as capballlocation for capballlocation in capBallLocations"></select>
     </label>
-    <label class="item item-toggle">
-        <span class="input-label">All Clear</span>
-        <label class="toggle">
-            <input ng-model="rating.allClear" type="checkbox" placeholder="All Clear" />
-            <div class="track"><div class="handle"></div></div>
-        </label>
+    <label class="item item-select">
+        <span class="input-label">Final Beacons</span>
+        <select ng-model="rating.finalBeacons" ng-options="beacon as beacon for beacon in totalBeacons"></select>
     </label>
 </div>
 <div class="list card">
