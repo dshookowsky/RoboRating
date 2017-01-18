@@ -1,31 +1,32 @@
-<?xml version='1.0' encoding='utf-8'?>
-<widget id="net.practicaldeveloper.roborating" version="0.1.4.0" android-versionCode="1040" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>RoboRating</name>
-    <description>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<widget id="net.practicaldeveloper.roborating" version="0.1.5.0" android-versionCode="1050" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>RoboRating</name>
+  <engine name="android" spec="~6.1.0" />
+  <description>
         FTC Velocity Vortex Scouting
     </description>
-    <author email="dshookowsky@gmail.com" href="http://www.practicaldeveloper.net">
+  <author email="dshookowsky@gmail.com" href="http://www.practicaldeveloper.net">
       Dan Shookowsky
     </author>
-    <content src="index.html" />
-    <access origin="*" />
-    <preference name="webviewbounce" value="false" />
-    <preference name="UIWebViewBounce" value="false" />
-    <preference name="DisallowOverscroll" value="true" />
-    <preference name="android-minSdkVersion" value="16" />
-    <preference name="BackupWebStorage" value="none" />
-    <feature name="StatusBar">
-        <param name="ios-package" onload="true" value="CDVStatusBar" />
-    </feature>
-    <platform name="android">
-        <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
-        <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
-        <icon density="hdpi" src="resources/android/icon/drawable-hdpi-icon.png" />
-        <icon density="xhdpi" src="resources/android/icon/drawable-xhdpi-icon.png" />
-        <icon density="xxhdpi" src="resources/android/icon/drawable-xxhdpi-icon.png" />
-        <icon density="xxxhdpi" src="resources/android/icon/drawable-xxxhdpi-icon.png" />
-    </platform>
-    <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
-    <plugin name="ionic-plugin-keyboard" spec="~2.2.1" />
-    <plugin name="cordova-sqlite-storage" spec="https://github.com/litehelpers/Cordova-sqlite-storage.git" />
+  <content src="index.html"/>
+  <access origin="*"/>
+  <preference name="webviewbounce" value="false"/>
+  <preference name="UIWebViewBounce" value="false"/>
+  <preference name="DisallowOverscroll" value="true"/>
+  <preference name="android-minSdkVersion" value="16"/>
+  <preference name="BackupWebStorage" value="none"/>
+  <feature name="StatusBar">
+    <param name="ios-package" onload="true" value="CDVStatusBar"/>
+  </feature>
+  <platform name="android">
+    <icon src="resources/android/icon/drawable-ldpi-icon.png" qualifier="ldpi"/>
+    <icon src="resources/android/icon/drawable-mdpi-icon.png" qualifier="mdpi"/>
+    <icon src="resources/android/icon/drawable-hdpi-icon.png" qualifier="hdpi"/>
+    <icon src="resources/android/icon/drawable-xhdpi-icon.png" qualifier="xhdpi"/>
+    <icon src="resources/android/icon/drawable-xxhdpi-icon.png" qualifier="xxhdpi"/>
+    <icon src="resources/android/icon/drawable-xxxhdpi-icon.png" qualifier="xxxhdpi"/>
+  </platform>
+  <icon src="resources/android/icon/drawable-xhdpi-icon.png"/>
+  <plugin name="ionic-plugin-keyboard" spec="~2.2.1"/>
+  <plugin name="cordova-sqlite-storage" spec="https://github.com/litehelpers/Cordova-sqlite-storage.git"/>
 </widget>
