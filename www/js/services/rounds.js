@@ -50,7 +50,7 @@ angular.module('roboRating.services')
                         autonBeacons: rating.autonBeacons,
                         autonParticlesShot: rating.autonParticlesShot,
                         autonParticlesScored: rating.autonParticlesScored,
-                        autonomousParkingLocation: rating.autonomousParkingLocation,
+                        autonomousParking: rating.autonomousParking,
                         autonCapBall: rating.autonCapBall == true,
                         teleopCornerShots: rating.teleopCornerShots,
                         teleopCornerScores: rating.teleopCornerScores,

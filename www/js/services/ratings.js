@@ -139,7 +139,7 @@ angular.module('roboRating.services')
                                 autonBeacons: rating.autonBeacons,
                                 autonParticlesShot: rating.autonParticlesShot,
                                 autonParticlesScored: rating.autonParticlesScored,
-                                autonomousParkingLocation: rating.autonomousParkingLocation,
+                                autonomousParking: rating.autonomousParking,
                                 autonCapBall: rating.autonCapBall == true,
                                 teleopCornerShots: rating.teleopCornerShots,
                                 teleopCornerScores: rating.teleopCornerScores,
@@ -198,7 +198,7 @@ angular.module('roboRating.services')
                                 autonBeacons: rating.autonBeacons,
                                 autonParticlesShot: rating.autonParticlesShot,
                                 autonParticlesScored: rating.autonParticlesScored,
-                                autonomousParkingLocation: rating.autonomousParkingLocation,
+                                autonomousParking: rating.autonomousParking,
                                 autonCapBall: rating.autonCapBall == true,
                                 teleopCornerShots: rating.teleopCornerShots,
                                 teleopCornerScores: rating.teleopCornerScores,
@@ -304,18 +304,6 @@ angular.module('roboRating.services')
                 rating.notes,
                 rating.complete ? 1 : 0
             ];
-            /*
-            this.fields.map(function(f) { 
-                if (rating.hasOwnProperty(f.name)) {
-                    if (f.type === "bool") {
-                         return rating[f.name] ? 1 : 0;
-                    }
-                    else {
-                        return rating[f.name];
-                    }
-                }
-            })
-            */
 
             $cordovaSQLite.execute(db, query, values).then(function (res) {
                 console.log("insertId: " + res.insertId);
